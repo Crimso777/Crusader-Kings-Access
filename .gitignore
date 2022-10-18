@@ -1,0 +1,16 @@
+#Whitelisted Folders
+*
+!*/
+# Git essentials
+!.gitignore
+!.gitattributes
+!/LICENSE
+
+#Core Folders and all subfolders
+
+!/Game/**
+!/Python/**
+!/Deliverables/**
+!/Snippets/**
+
+
