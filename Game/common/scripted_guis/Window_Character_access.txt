@@ -9,7 +9,7 @@
 
 	effect = {			# what it does
 	debug_log = "<CharacterWindow>"
-	#debug_log = "<out>[THIS.Char.GetNameNoTooltip] is [THIS.Char.GetAge] years old and has an id of [THIS.Char.GetID]</out>"
+	debug_log = "<out>[THIS.Char.GetNameNoTooltip] is [THIS.Char.GetAge] years old and has an id of [THIS.Char.GetID]</out>"
 	debug_log = "Spouse [THIS.Char.GetPrimarySpouse.GetNameNoTooltip] thinks the following: [THIS.Char.GetPrimarySpouse.GetOpinionBreakdownText(THIS.Char)]"
 
 debug_log = " Diplomacy [THIS.Char.MakeScope.ScriptValue('debug_diplo')] Martial [THIS.Char.MakeScope.ScriptValue('debug_martial')] Stewardship [THIS.Char.MakeScope.ScriptValue('debug_stew')] Intrigue [THIS.Char.MakeScope.ScriptValue('debug_int')] Learning [THIS.Char.MakeScope.ScriptValue('debug_learn')]"

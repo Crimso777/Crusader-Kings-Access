@@ -9,7 +9,7 @@
 	effect = {			# what it does
 	set_global_variable = {
   name = charid
-  value = 8686
+  value = 0
   }
   	set_global_variable = {
   name = test
