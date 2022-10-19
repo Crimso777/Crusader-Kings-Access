@@ -1,4 +1,4 @@
-PATH = input("Enter absolute path to your debug.log file:   ")
+PATH = "C:/Users/Tomrio/Documents/Paradox Interactive/Crusader Kings III/logs/debug.log"
 import pygame
 import time
 import re
@@ -35,11 +35,12 @@ screen.fill(fuchsia)  # Transparent background
 pygame.display.update()
 #pause = input("Press enter to continue")
 num_lines = 0
+cursor = 0
 with open(PATH) as f:
    for i, line in enumerate(f):
       num_lines = num_lines + 1  # process line i
    f.seek(0,2)
-   print(f.tell())
+#   print(f.tell())
    cursor = f.tell()
 ao_output.output("Hello Crusaders!", True)
 updated = os.path.getmtime(PATH)
@@ -48,6 +49,7 @@ while True:
       count = 0
       with open(PATH) as f:
          f.seek(cursor, 0)
+#         cursor = f.tell()
          buffer = f.read()
          pattern = "(<out>)(..*)(</out>)"
          match = re.search(pattern, buffer)
@@ -57,11 +59,14 @@ while True:
          for i, line in enumerate(f):
             count = count + 1
          f.seek(0,2)
+         cursor = f.tell()
+
 
       updated = os.path.getmtime(PATH)
       num_lines = num_lines + count
-      print(count)
-      print(num_lines)
+#      print(cursor)
+#      print(count)
+#      print(num_lines)
 
 
 
