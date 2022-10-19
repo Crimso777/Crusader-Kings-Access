@@ -1,0 +1,22 @@
+﻿		binary_reset = {
+
+	scope = character
+
+	saved_scopes = { 
+} 		# any additional targets
+	is_valid = {} 		# can the player use it?
+
+	effect = {			# what it does
+	set_global_variable = {
+  name = charid
+  value = 8686
+  }
+  	set_global_variable = {
+  name = test
+  value = "1"
+  }
+
+  debug_log = "reset"
+
+}
+}

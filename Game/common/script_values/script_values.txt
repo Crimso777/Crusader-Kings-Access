@@ -1,0 +1,5 @@
+﻿debug_diplo = { add = diplomacy } 
+debug_martial = { add = martial } 
+debug_stew = { add = stewardship } 
+debug_int = { add = intrigue } 
+debug_learn = { add = learning 

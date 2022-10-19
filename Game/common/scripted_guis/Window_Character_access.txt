@@ -1,0 +1,39 @@
+﻿Window_Character_access = {
+
+	scope = character
+
+	saved_scopes = { 
+   target 
+} 		# any additional targets
+	is_valid = {} 		# can the player use it?
+
+	effect = {			# what it does
+	debug_log = "<CharacterWindow>"
+	#debug_log = "<out>[THIS.Char.GetNameNoTooltip] is [THIS.Char.GetAge] years old and has an id of [THIS.Char.GetID]</out>"
+	debug_log = "Spouse [THIS.Char.GetPrimarySpouse.GetNameNoTooltip] thinks the following: [THIS.Char.GetPrimarySpouse.GetOpinionBreakdownText(THIS.Char)]"
+
+debug_log = " Diplomacy [THIS.Char.MakeScope.ScriptValue('debug_diplo')] Martial [THIS.Char.MakeScope.ScriptValue('debug_martial')] Stewardship [THIS.Char.MakeScope.ScriptValue('debug_stew')] Intrigue [THIS.Char.MakeScope.ScriptValue('debug_int')] Learning [THIS.Char.MakeScope.ScriptValue('debug_learn')]"
+#debug_log = "[THIS.Char.GetTraitIndices]"
+set_variable = { 
+   name = education 
+value = scope:target
+}
+		debug_log = "Traits: <out>[THIS.Var('education').GetFlagName]</out>"
+		
+every_close_family_member = {
+debug_log = "Name: [THIS.Char.GetNameNoTooltip] ID: [THIS.Char.GetID] Relationship: [THIS.Char.GetRelationToStringExtended(PREV.Char)] Opinion: [THIS.Char.GetOpinionOf(PREV.Char)] Breakdown: [THIS.Char.GetOpinionBreakdownText(PREV.Char)]"
+}
+every_courtier_or_guest = {
+debug_log = "Name: [THIS.Char.GetNameNoTooltip] ID: [THIS.Char.GetID] Relationship: [THIS.Char.GetRelationToStringExtended(PREV.Char)] Opinion: [THIS.Char.GetOpinionOf(PREV.Char)] Breakdown: [THIS.Char.GetOpinionBreakdownText(PREV.Char)]"
+}
+every_vassal = {
+debug_log = "Name: [THIS.Char.GetNameNoTooltip] ID: [THIS.Char.GetID] Relationship: [THIS.Char.GetRelationToStringExtended(PREV.Char)] Opinion: [THIS.Char.GetOpinionOf(PREV.Char)] Breakdown: [THIS.Char.GetOpinionBreakdownText(PREV.Char)]"
+}
+debug_log = "</CharacterWindow>"
+
+debug_log = "<1out>[GetString_CVector2f(GetAbsoluteMousePosition)]</out>"
+
+#debug_log = "<out>Hello World!</out>"
+
+}
+}

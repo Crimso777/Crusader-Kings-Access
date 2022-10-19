@@ -1,0 +1,18 @@
+﻿pause_game_access = {
+
+	scope = character
+
+	saved_scopes = { 
+   paused 
+   pausable
+} 		# any additional targets
+	is_valid = {} 		# can the player use it?
+
+	effect = {			# what it does
+	if = { limit = { scope:paused.GetValue = 1.0}
+		debug_log = "<out>Paused</out>"}
+	else_if = { limit = { scope:pausable.GetValue = 1.0}
+		debug_log = "<out>Resumed.</out>"}
+		else = { debug_log = "<out>Cannot resume right   now.</out>"}
+}
+}

@@ -1,0 +1,22 @@
+﻿		increment = {
+
+	scope = character
+
+	saved_scopes = { 
+} 		# any additional targets
+	is_valid = {} 		# can the player use it?
+
+	effect = {			# what it does
+	set_global_variable = {
+  name = num
+  value = {value = global_var:num add = 1}
+  }
+if = {
+ limit = { 
+ global_var:num.compare_value <= 7 
+ }  
+ debug_log = "<out>[GetGlobalVariable('num').GetValue]</out>"
+}
+
+}
+}
