@@ -3,6 +3,7 @@
 	scope = character
 
 	saved_scopes = { 
+	target
 } 		# any additional targets
 	is_valid = {} 		# can the player use it?
 
@@ -13,9 +14,24 @@
   }
 if = {
  limit = { 
- global_var:num.compare_value <= 7 
+ global_var:num.compare_value = 1 
  }  
- debug_log = "<out>[GetGlobalVariable('num').GetValue]</out>"
+ set_global_variable = { 
+   name = option 
+value = scope:target
+}
+custom_description_no_tooltip = {
+	text = "[GetGlobalVariable('option').GetFlagName]"
+#	subject = <optional subject scope> #defaults to current scope
+#	object = <optional object scope>
+#	value = <optional script value>
+#	... effects ...
+}
+
+# debug_log = "<out>[GetGlobalVariable('num').GetValue]</out>"
+#		debug_log = "<out>[THIS.Var('education').GetFlagName]</out>"
+ debug_log = "<out>[GetGlobalVariable('option').GetFlagName]</out>"
+
 }
 
 }

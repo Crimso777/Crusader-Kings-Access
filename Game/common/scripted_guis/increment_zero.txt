@@ -11,6 +11,10 @@
   name = num
   value = 0
   }
+	set_global_variable = {
+  name = option
+  value = ""
+  }
 
 }
 }

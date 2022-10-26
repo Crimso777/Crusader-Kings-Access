@@ -147,7 +147,9 @@ state = {
 #					on_start = "[InteractionCategoryItem.ShowMoreInteractions]"
 #					on_start = "[GetVariableSystem.Set( 'InteractionList', Concatenate(Concatenate( GetVariableSystem.Get('InteractionList') , InteractionCategoryItem.GetName), ', ')))]"
 	#		 		on_start = "[PdxGuiTriggerAllAnimations('append_interaction_list1')]"
-	on_start = "[GetScriptedGui( 'increment' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+#					on_start = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
+
+	on_start = "[GetScriptedGui( 'increment' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target', MakeScopeFlag(InteractionCategoryItem.GetName)).End)]"
 #on_finish = "[PdxGuiTriggerAllAnimations('speak3')]"
 
 
@@ -159,7 +161,13 @@ state = {
 	name = "append_interaction_list"
 #on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue( GetGlobalVariable('num').GetValue) ).End)]"
 }
-
+container = {
+    visible = "[EqualTo_string( InteractionCategoryItem.GetName , GetScriptedGui( 'increment' ).ExecuteTooltip(GuiScope.SetRoot( GetPlayer.MakeScope ).End  )]"
+    state = {
+        name = "append_interaction_list"
+            on_start = "[GetScriptedGui( 'speak_flag' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('flag', MakeScopeFlag(InteractionCategoryItem.GetName)).End)]"
+		    }
+}
 #				datamodel = "[InteractionCategoryItem.GetInteractions]"
 #					item = {
 #					container = {
