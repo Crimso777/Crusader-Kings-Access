@@ -1,0 +1,162 @@
+﻿		pop_stack = {
+
+	scope = character
+
+	saved_scopes = { 
+} 		# any additional targets
+	is_valid = {} 		# can the player use it?
+
+	effect = {			# what it does
+		if = { 
+			limit = { 
+				global_var:opcode.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = opcode
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+#			debug_log = "<out>Assigned [GetGlobalVariable('opcode').GetValue] to opcode</out>"
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg1.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg1
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+#			debug_log = "<out>Assigned [GetGlobalVariable('arg1').GetValue] to arg1</out>"
+
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg2.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg2
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+			debug_log = "<out>Assigned [GetGlobalVariable('arg2').GetValue] to arg2</out>"
+
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg3.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg3
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+			debug_log = "<out>Assigned [GetGlobalVariable('arg3').GetValue] to arg3</out>"
+
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg4.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg4
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+			debug_log = "<out>Assigned [GetGlobalVariable('arg4').GetValue] to arg4</out>"
+
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg5.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg5
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+			debug_log = "<out>Assigned [GetGlobalVariable('arg5').GetValue] to arg5</out>"
+
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg6.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg6
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+			debug_log = "<out>Assigned [GetGlobalVariable('arg6').GetValue] to arg6</out>"
+
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg7.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg7
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+			debug_log = "<out>Assigned [GetGlobalVariable('arg7').GetValue] to arg7</out>"
+
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg8.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg8
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+			debug_log = "<out>Assigned [GetGlobalVariable('arg8').GetValue] to arg8</out>"
+
+		}
+		else_if = { 
+			limit = { 
+				global_var:arg9.compare_value = 0 
+			} 
+			set_global_variable = {
+				name = arg9
+				value = global_var:arg0
+			}
+			set_global_variable = {
+				name = arg0
+				value = 0
+			}
+			debug_log = "<out>Assigned [GetGlobalVariable('arg9').GetValue] to arg9</out>"
+
+		}
+
+
+}
+}

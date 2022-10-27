@@ -183,7 +183,7 @@ container = {
  
 	#onclick = "[ExecuteConsoleCommand(FixedPointToInt(GetGlobalVariable('charid').GetValue))]"
 	
-		shortcut = army_split_half
+#		shortcut = army_split_half
 	
 	}
 }
@@ -198,7 +198,7 @@ container = {
 	#onclick = "[ExecuteConsoleCommand(FixedPointToInt(GetGlobalVariable('charid').GetValue))]"
 		onclick = "[GetScriptedGui('binary_zero').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 			  		#onclick = "[GetVariableSystem.Clear( 'TraitList' )]"
-		shortcut = "army_merge"
+#		shortcut = "army_merge"
 	
 	}
 }
@@ -215,7 +215,7 @@ container = {
 			  		#onclick = "[GetVariableSystem.Clear( 'TraitList' )]"
 
 	
-		shortcut = army_create_new
+#		shortcut = army_create_new
 		
 	}
 }
@@ -252,7 +252,7 @@ container = {
 		#onclick = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
 		onclick = "[PdxGuiTriggerAllAnimations('character_select1')]"
 		  				
-		shortcut = army_disband
+#		shortcut = army_disband
 	}
 }
 

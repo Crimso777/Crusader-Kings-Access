@@ -1,0 +1,61 @@
+﻿		hard_reset = {
+
+	scope = character
+
+	saved_scopes = { 
+} 		# any additional targets
+	is_valid = {} 		# can the player use it?
+
+	effect = {			# what it does
+	#Operation to be performed, ie select a character, right click a character, etc.
+	set_global_variable = {
+  name = opcode
+  value = 0
+  }
+  #Argument that gets modified by input, should not be used directly.
+  	set_global_variable = {
+  name = arg0
+  value = 0
+  }
+  #Various arguments contai	ning misc values such as character ids, province ids, index of a selected gui element etc.
+  	set_global_variable = {
+  name = arg1
+  value = 0
+  }
+  	set_global_variable = {
+  name = arg2
+  value = 0
+  }
+  	set_global_variable = {
+    name = arg3
+  value = 0
+  }
+  	set_global_variable = {
+    name = arg4
+  value = 0
+  }
+  	set_global_variable = {
+    name = arg5
+  value = 0
+  }
+  	set_global_variable = {
+    name = arg6
+  value = 0
+  }
+  	set_global_variable = {
+    name = arg7
+  value = 0
+  }
+  	set_global_variable = {
+    name = arg8
+  value = 0
+  }
+  	set_global_variable = {
+    name = arg9
+  value = 0
+  }
+
+#  debug_log = "<out>hard reset</out>"
+
+}
+}

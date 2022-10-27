@@ -1,4 +1,4 @@
-﻿		binary_zero = {
+﻿speak_registry = {
 
 	scope = character
 
@@ -7,10 +7,6 @@
 	is_valid = {} 		# can the player use it?
 
 	effect = {			# what it does
-	set_global_variable = {
-  name = arg0
-  value = {value = global_var:arg0 multiply = 2}
-  }
-
+		debug_log = "<out>arg0:[GetGlobalVariable('arg0').GetValue]</out>"
 }
 }

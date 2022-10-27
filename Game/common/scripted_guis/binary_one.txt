@@ -8,8 +8,8 @@
 
 	effect = {			# what it does
 	set_global_variable = {
-  name = charid
-    value = {value = global_var:charid multiply = 2 add = 1}
+  name = arg0
+    value = {value = global_var:arg0 multiply = 2 add = 1}
 }
 
 }

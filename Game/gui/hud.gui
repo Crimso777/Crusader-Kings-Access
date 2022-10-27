@@ -10,6 +10,75 @@ widget = {
 
 	using = Animation_ShowHide_Standard
 
+#CKA
+container = {
+	visible = Yes
+button = {
+		position = { 0 0 }
+		size = { 0 0 }
+		clicksound = ""
+		onclick = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+		shortcut = army_disband
+	}
+	button = {
+		position = { 0 0 }
+		size = { 0 0 }
+								
+		clicksound = ""
+						
+		onclick = "[GetScriptedGui('binary_zero').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+		shortcut = "army_merge"	
+	}
+	button = {
+		position = { 0 0 }
+		size = { 0 0 }
+								
+		        clicksound = ""						
+		onclick = "[GetScriptedGui('binary_one').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+		shortcut = army_create_new		
+	}
+	button = {
+		position = { 0 0 }
+		size = { 0 0 }
+								
+		clicksound = ""						
+		state = {
+			name = "pop_stack"
+			on_start = "[GetScriptedGui('pop_stack').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+			on_finish = "[PdxGuiTriggerAllAnimations('execute')]"
+
+		}
+		onclick = "[PdxGuiTriggerAllAnimations('pop_stack')]"
+
+		shortcut = army_split_half
+	}
+	button = {
+		visible = "[And(EqualTo_CFixedPoint(GetGlobalVariable('opcode').GetValue, '(CFixedPoint)1.0'), NotEqualTo_CFixedPoint(GetGlobalVariable('arg1').GetValue, '(CFixedPoint)0'))]"
+		position = { 0 0 }
+		size = { 0 0 }
+		state = {
+			name = _show
+#			on_start = "[PdxGuiTriggerAllAnimations('character_select1')]"
+
+			on_start = "[GetScriptedGui( 'speak_registry' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+		}
+		state = {
+			name = "character_select1"
+			on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
+			on_start  = "[DefaultOnCharacterClick(IntToUnsigned(FixedPointToInt(GetGlobalVariable('arg1').GetValue)))]"
+			on_finish = "[PdxGuiTriggerAllAnimations('character_select2')]"
+		}
+		state = {
+			name = "character_select2"
+			on_start = "[PdxGuiTriggerAllAnimations('append_trait_list')]"
+
+			on_finish = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
+		}
+
+	}
+
+}
+
 	flowcontainer = {
 		name = "observer_status"
 		visible = "[IsObserver]"
@@ -4763,3 +4832,6 @@ types HUD
 		}
 	}
 }
+
+
+#CKA
