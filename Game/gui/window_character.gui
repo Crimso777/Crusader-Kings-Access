@@ -19,14 +19,14 @@ window = {
 		using = Sound_WindowShow_Standard
 		position_x = 0
 		#CKA
-		on_start = "[GetScriptedGui( 'binary_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
-		on_start = "[GetScriptedGui( 'increment_zero' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+#		on_start = "[GetScriptedGui( 'binary_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+#		on_start = "[GetScriptedGui( 'increment_zero' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 
-		on_start = "[GetVariableSystem.Set( 'CurrentSoldiers', CharacterWindow.GetCurrentSoldiers )]"
-		on_start = "[PdxGuiTriggerAllAnimations('append_trait_list')]"
-				on_start = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
+#		on_start = "[GetVariableSystem.Set( 'CurrentSoldiers', CharacterWindow.GetCurrentSoldiers )]"
+#		on_start = "[PdxGuiTriggerAllAnimations('append_trait_list')]"
+#				on_start = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
    
-		on_start = "[GetVariableSystem.Set( 'OPCode', GetGlobalVariable('test').GetValue )]"
+#		on_start = "[GetVariableSystem.Set( 'OPCode', GetGlobalVariable('test').GetValue )]"
 
 		on_start = "[GetVariableSystem.Set( 'hide_bottom_left_HUD', 'true' )]"
 	}
@@ -37,7 +37,7 @@ window = {
 		using = Sound_WindowHide_Standard
 		position_x = -60
 #CKA
-		on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
+#		on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
 
 		on_start = "[GetVariableSystem.Clear( 'hide_bottom_left_HUD' )]"
 	
@@ -83,6 +83,12 @@ on_start = "[GetVariableSystem.Set( 'TraitList', Concatenate(Concatenate( GetVar
 	}
 }
 
+hbox = {
+	state = {
+		name = "cka_select_character"
+		on_start = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
+	}
+}
 	
 		
 	vbox = {
@@ -156,7 +162,7 @@ container = {
 								
 		        #clicksound = ""
 		state = {
-			name = "character_interact1"
+			name = "old_character_interact1"
 			on_start = "[DefaultOnCharacterRightClick(IntToUnsigned(FixedPointToInt(GetGlobalVariable('charid').GetValue)))]"
 			on_start = "[GetVariableSystem.Clear( 'InteractionList' )]"
 
@@ -164,11 +170,11 @@ container = {
 		}
 						
 		state = {
-			name = "character_interact2"
+			name = "old_character_interact2"
 			on_finish = "[PdxGuiTriggerAllAnimations('character_interact3')]"
 		}
 		state = {
-			name = "character_interact3"
+			name = "old_character_interact3"
 			on_start = "[GetScriptedGui( 'binary_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 			on_start = "[PdxGuiTriggerAllAnimations('append_interaction_list')]"
 #				on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue('(CFixedPoint)1')).End)]"
@@ -226,13 +232,13 @@ container = {
 		size = { 0 0 }
 		
 		state = {
-			name = "character_select1"
+			name = "old_character_select1"
 			on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
 			on_start  = "[DefaultOnCharacterClick(IntToUnsigned(FixedPointToInt(GetGlobalVariable('charid').GetValue)))]"
 			on_finish = "[PdxGuiTriggerAllAnimations('character_select2')]"
 		}
 		state = {
-			name = "character_select2"
+			name = "old_character_select2"
 			on_start = "[PdxGuiTriggerAllAnimations('append_trait_list')]"
 			on_start = "[GetScriptedGui( 'binary_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 	     	  #on_start = "[GetScriptedGui( 'increment_zero' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
