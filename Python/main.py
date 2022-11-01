@@ -141,14 +141,23 @@ while True:
             autoit.control_send_by_handle(window_id, window_id, "{DOWN}")
          elif event.key == pygame.K_LEFT and pygame.key.get_mods() == 0 :
 #            autoit.control_send_by_handle(window_id, window_id, "{LEFT}")
+            autoit.control_send_by_handle(window_id, window_id, "h")
+            time.sleep(.1)
+            autoit.control_send_by_handle(window_id, window_id, "f")
+            time.sleep(.1)
             autoit.control_send_by_handle(window_id, window_id, "hgggghhhhghhhg")
-            time.sleep(.01)
-#            autoit.control_send_by_handle(window_id, window_id, "j")
+            time.sleep(.1)
+            autoit.control_send_by_handle(window_id, window_id, "f")
 
          elif event.key == pygame.K_RIGHT and pygame.key.get_mods() == 0 :
-#            autoit.control_send_by_handle(window_id, window_id, "hgggghgghgghggj")
+#            autoit.control_send_by_handle(window_id, window_id, "hgggghgghgghgg")
+            autoit.control_send_by_handle(window_id, window_id, "hg")
+            time.sleep(.1)
+            autoit.control_send_by_handle(window_id, window_id, "f")
+            time.sleep(.1)
+
             autoit.control_send_by_handle(window_id, window_id, "hgggghgghgghgg")
-            time.sleep(.01)
+            time.sleep(.1)
             autoit.control_send_by_handle(window_id, window_id, "f")
 
 #            autoit.control_send_by_handle(window_id, window_id, "{RIGHT}")
