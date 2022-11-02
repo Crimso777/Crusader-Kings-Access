@@ -48,7 +48,7 @@
 				name = arg0
 				value = 0
 			}
-			debug_log = "<out>Assigned [GetGlobalVariable('arg2').GetValue] to arg2</out>"
+			#debug_log = "<out>Assigned [GetGlobalVariable('arg2').GetValue] to arg2</out>"
 
 		}
 		else_if = { 

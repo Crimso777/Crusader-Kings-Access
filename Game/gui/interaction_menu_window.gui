@@ -144,6 +144,10 @@ window = {
 #CKA
 visible = "[InteractionCategoryItem.IsVisible]"
 state = {
+	name = "select_interaction_category"
+	on_start = "[GetScriptedGui( 'increment' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target', MakeScopeFlag(InteractionCategoryItem.GetName)).AddScope('index', MakeScopeValue( GetGlobalVariable('arg2').GetValue)).End)]"
+} 
+state = {
 	name = "append_interaction_list"
 #					on_start = "[InteractionCategoryItem.ShowMoreInteractions]"
 					on_start = "[GetVariableSystem.Set( 'InteractionList', Concatenate(Concatenate( GetVariableSystem.Get('InteractionList') , InteractionCategoryItem.GetName), ', ')))]"
@@ -163,11 +167,63 @@ state = {
 #on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue( GetGlobalVariable('num').GetValue) ).End)]"
 }
 container = {
-    visible = "[EqualTo_string( InteractionCategoryItem.GetName , GetScriptedGui( 'increment' ).ExecuteTooltip(GuiScope.SetRoot( GetPlayer.MakeScope ).End  )]"
-    state = {
-        name = "append_interaction_list"
+#	visible = "[EqualTo_string( InteractionCategoryItem.GetName, GetScriptedGui( 'increment' ).ExecuteTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target', MakeScopeFlag(InteractionCategoryItem.GetName)).AddScope('index', MakeScopeValue( GetGlobalVariable('arg2').GetValue)).End))]" 
+	visible = "[EqualTo_string( InteractionCategoryItem.GetName, GetGlobalVariable('option').GetFlagName)]"  
+	state = {
+		name = "append_interaction_options_list1"
+		on_start = "[InteractionCategoryItem.ShowMoreInteractions]"
+		on_start = "[GetVariableSystem.Clear( 'InteractionOptionsList' )]"
+
+		on_finish = "[PdxGuiTriggerAllAnimations('append_interaction_options_list2')]"
+
+	}
+	state = {
+		name = "append_interaction_options_list2"
+
+		on_start = "[GetVariableSystem.Clear( 'InteractionOptionsList' )]"
+		on_finish = "[PdxGuiTriggerAllAnimations('append_interaction_options_list3')]"
+		on_finish = "[PdxGuiTriggerAllAnimations('append_interaction_options_list4')]"
+	}
+#Output lists here.
+	state = {
+		name = "append_interaction_options_list3"
+			on_start = "[GetScriptedGui('speak_flag').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'flag', MakeScopeFlag(GetVariableSystem.Get('InteractionOptionsList') ) ).End)]"
+	}
+	container = {
+		datamodel = "[CharacterInteractionMenuWindow.GetMoreInteractions]"
+
+		item = {
+			container = {
+				visible = "[And(InteractionItem.IsValid, Not(GetVariableSystem.Exists('InteractionOptionsList')))]"
+				state = {
+					name = "append_interaction_options_list4"
+					on_start = "[GetVariableSystem.Set( 'InteractionOptionsList', Concatenate(Concatenate( GetVariableSystem.Get('InteractionOptionsList') , InteractionItem.GetName), ', ')))]"
+	#				on_start = "[GetScriptedGui('speak_flag').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'flag', MakeScopeFlag( InteractionItem.GetName ) ).End)]"
+
+				}			
+			}
+		}
+	}
+	container = {
+		datamodel = "[InteractionCategoryItem.GetInteractions]"
+
+		item = {
+			container = {
+				visible = "[And(InteractionItem.IsValid, Not(GetVariableSystem.Exists('InteractionOptionsList')))]"
+				state = {
+					name = "append_interaction_options_list4"
+					on_start = "[GetVariableSystem.Set( 'InteractionOptionsList', Concatenate(Concatenate( GetVariableSystem.Get('InteractionOptionsList') , InteractionItem.GetName), ', ')))]"
+	#				on_start = "[GetScriptedGui('speak_flag').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'flag', MakeScopeFlag( InteractionItem.GetName ) ).End)]"
+
+				}			
+			}
+		}
+	}
+#    state = {
+#        name = "select_category"
             #on_start = "[GetScriptedGui( 'speak_flag' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('flag', MakeScopeFlag(InteractionCategoryItem.GetName)).End)]"
-		    }
+#        on_start = "[]"
+#		    }
 }
 #				datamodel = "[InteractionCategoryItem.GetInteractions]"
 #					item = {

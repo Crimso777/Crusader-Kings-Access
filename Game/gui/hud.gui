@@ -1,4 +1,4 @@
-﻿######################################################
+######################################################
 #################### META INFO #######################
 ######################################################
 
@@ -63,7 +63,7 @@ button = {
 			name = "character_select1"
 			on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
 			on_start  = "[DefaultOnCharacterClick(IntToUnsigned(FixedPointToInt(GetGlobalVariable('arg1').GetValue)))]"
-			#on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue( GetGlobalVariable('opcode').GetValue) ).End)]"
+			#on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue( d) ).End)]"
 #	on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue('(CFixedPoint)1')).End)]"
 
 			on_finish = "[PdxGuiTriggerAllAnimations('character_select2')]"
@@ -100,7 +100,37 @@ button = {
 		}
 
 	}
+#Right click menu category selector
+#Opcode == 2
+#Args used: arg1, arg2
+	button = {
+		visible = "[And(And(And(EqualTo_CFixedPoint(GetGlobalVariable('opcode').GetValue, '(CFixedPoint)2.0'), NotEqualTo_CFixedPoint(GetGlobalVariable('arg1').GetValue, '(CFixedPoint)0')),NotEqualTo_CFixedPoint(GetGlobalVariable('arg2').GetValue, '(CFixedPoint)0')),EqualTo_CFixedPoint(GetGlobalVariable('arg3').GetValue, '(CFixedPoint)0'))]"
+		position = { 0 0 }
+		size = { 0 0 }
+		state = {
+			name = _show
+				on_start = "[GetVariableSystem.Set( 'InteractionOptionsShown', 'False' )]"
+			on_start = "[GetVariableSystem.Clear( 'InteractionOptionsList' )]"
+		
+			on_start = "[GetScriptedGui( 'increment_zero' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+			on_finish = "[PdxGuiTriggerAllAnimations('character_interact2')]"
 
+		}
+		state = {
+			name = "character_interact2"
+			on_start = "[PdxGuiTriggerAllAnimations('select_interaction_category')]"
+#			on_finish = "[GetScriptedGui('speak_flag').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'flag', MakeScopeFlag(GetScriptedGui( 'increment' ).ExecuteTooltip(GuiScope.SetRoot( GetPlayer.MakeScope ).end) ).End)]"
+
+			on_finish = "[PdxGuiTriggerAllAnimations('character_interact4')]"
+		}
+		state = {
+			name = "character_interact4"
+			on_start = "[PdxGuiTriggerAllAnimations('append_interaction_options_list1')]"
+
+
+		}
+
+	}
 }
 
 	flowcontainer = {
