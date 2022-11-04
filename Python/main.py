@@ -11,7 +11,7 @@ import autoit
 import accessible_output2.outputs.auto
 
 window_id = win32gui.FindWindow("SDL_app", "Crusader Kings III")
-print(window_id)
+#print(window_id)
 #autoit.mouse_move(50,50,0)
 #autoit.control_send_by_handle(window_id, window_id, "{F1}")
 
@@ -21,7 +21,7 @@ pygame.init()
 pygame.display.set_caption("Crusader Kings 3 Access")
 infoObject = pygame.display.Info()
 screen = pygame.display.set_mode((infoObject.current_w , infoObject.current_h ), pygame.NOFRAME) # For borderless, use pygame.NOFRAME
-done = False
+#done = False
 fuchsia = (255, 0, 128)  # Transparency color
 
 # Create layered window
@@ -67,9 +67,6 @@ while True:
 #      print(cursor)
 #      print(count)
 #      print(num_lines)
-
-
-
 
        
     # creating a loop to check events that
