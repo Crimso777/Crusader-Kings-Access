@@ -210,8 +210,10 @@ while True:
 
       elif event.type == pygame.MOUSEBUTTONDOWN :
          if event.button == 1:
+            pass
 #            autoit.control_click_by_handle(window_id, window_id, button = 'left')
          elif event.button == 3:
+            pass
 #            autoit.control_click_by_handle(window_id, window_id, button = 'right')
             
       elif event.type == pygame.QUIT:
