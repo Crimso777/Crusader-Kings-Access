@@ -13,82 +13,13 @@ import win32gui
 import autoit
 import accessible_output2.outputs.auto
 
-window_id = win32gui.FindWindow("SDL_app", "Crusader Kings")
-win = ahk.find_window(title=b'Crusader Kings III') # Find the opened window#
-#win = Window.from_pid(ahk, pid=window_id)                 # by process IDprint(window_id)
-print(win.title)
-#autoit.mouse_move(50,50,0)
-#win.send("{F1}")
+from pynput import keyboard
 
-ao_output = accessible_output2.outputs.auto.Auto()
+def on_press(key):
+   if key == keyboard.Key.f1:
+      win.send("{F1}")
 
-pygame.init()
-pygame.display.set_caption("Crusader Kings 3 Access")
-infoObject = pygame.display.Info()
-screen = pygame.display.set_mode((infoObject.current_w , infoObject.current_h ), pygame.NOFRAME) # For borderless, use pygame.NOFRAME
-#done = False
-fuchsia = (255, 0, 128)  # Transparency color
-
-# Create layered window
-hwnd = pygame.display.get_wm_info()["window"]
-win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
-                       win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
-# Set window transparency color
-win32gui.SetLayeredWindowAttributes(hwnd, win32api.RGB(*fuchsia), 100, win32con.LWA_ALPHA )
-
-screen.fill(fuchsia)  # Transparent background
-pygame.display.update()
-#pause = input("Press enter to continue")
-num_lines = 0
-cursor = 0
-with open(PATH) as f:
-   for i, line in enumerate(f):
-      num_lines = num_lines + 1  # process line i
-   f.seek(0,2)
-#   print(f.tell())
-   cursor = f.tell()
-#ao_output.output("Hello Crusaders!", True)
-win.send("h")
-time.sleep(.1)
-win.send("f")
-time.sleep(.1)
-win.send("hgggghhhhghhhg")
-time.sleep(.1)
-win.send("f")
-
-updated = os.path.getmtime(PATH)
-while True:
-   if updated != os.path.getmtime(PATH):
-      count = 0
-      with open(PATH) as f:
-         f.seek(cursor, 0)
-#         cursor = f.tell()
-         buffer = f.read()
-         pattern = "(<out>)(..*)(</out>)"
-         match = re.search(pattern, buffer)
-         if match:
-            ao_output.output(match.group(2), True)
-         f.seek(cursor, 0)
-         for i, line in enumerate(f):
-            count = count + 1
-         f.seek(0,2)
-         cursor = f.tell()
-
-
-      updated = os.path.getmtime(PATH)
-      num_lines = num_lines + count
-#      print(cursor)
-#      print(count)
-#      print(num_lines)
-
-       
-    # creating a loop to check events that
-    # are occurring
-   for event in pygame.event.get():
-      if event.type == pygame.KEYDOWN:
-         if event.key == pygame.K_F1 and pygame.key.get_mods() == 0 :
-            win.send("{F1}")
-         elif event.key == pygame.K_F2 and pygame.key.get_mods() == 0 :
+"""         elif event.key == pygame.K_F2 and pygame.key.get_mods() == 0 :
             win.send("{F2}")
          elif event.key == pygame.K_F3 and pygame.key.get_mods() == 0 :
             win.send("{F3}")
@@ -215,7 +146,81 @@ while True:
             win.send("{SHIFTDOWN}{F11}{SHIFTUP}")
          elif event.key == pygame.K_F12 and pygame.key.get_mods() == 0 :
             win.send("{F12}")
+"""
+def on_release(key):
+    pass
+listener = keyboard.Listener(
+    on_press=on_press,
+    on_release=on_release)
 
+window_id = win32gui.FindWindow("SDL_app", "Crusader Kings")
+win = ahk.find_window(title=b'Crusader Kings III') # Find the opened window#
+#win = Window.from_pid(ahk, pid=window_id)                 # by process IDprint(window_id)
+print(win.title)
+#autoit.mouse_move(50,50,0)
+#win.send("{F1}")
+
+ao_output = accessible_output2.outputs.auto.Auto()
+
+pygame.init()
+pygame.display.set_caption("Crusader Kings 3 Access")
+infoObject = pygame.display.Info()
+screen = pygame.display.set_mode((infoObject.current_w , infoObject.current_h ), pygame.NOFRAME) # For borderless, use pygame.NOFRAME
+#done = False
+fuchsia = (255, 0, 128)  # Transparency color
+
+# Create layered window
+hwnd = pygame.display.get_wm_info()["window"]
+win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
+                       win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
+# Set window transparency color
+win32gui.SetLayeredWindowAttributes(hwnd, win32api.RGB(*fuchsia), 100, win32con.LWA_ALPHA )
+
+screen.fill(fuchsia)  # Transparent background
+pygame.display.update()
+#pause = input("Press enter to continue")
+num_lines = 0
+cursor = 0
+with open(PATH) as f:
+   for i, line in enumerate(f):
+      num_lines = num_lines + 1  # process line i
+   f.seek(0,2)
+#   print(f.tell())
+   cursor = f.tell()
+ao_output.output("Hello Crusaders!", True)
+
+updated = os.path.getmtime(PATH)
+listener.start()
+while True:
+   if updated != os.path.getmtime(PATH):
+      count = 0
+      with open(PATH) as f:
+         f.seek(cursor, 0)
+#         cursor = f.tell()
+         buffer = f.read()
+         pattern = "(<out>)(..*)(</out>)"
+         match = re.search(pattern, buffer)
+         if match:
+            ao_output.output(match.group(2), True)
+         f.seek(cursor, 0)
+         for i, line in enumerate(f):
+            count = count + 1
+         f.seek(0,2)
+         cursor = f.tell()
+
+
+      updated = os.path.getmtime(PATH)
+      num_lines = num_lines + count
+#      print(cursor)
+#      print(count)
+#      print(num_lines)
+
+       
+    # creating a loop to check events that
+    # are occurring
+   for event in pygame.event.get():
+      if event.type == pygame.KEYDOWN:
+         pass
       elif event.type == pygame.MOUSEBUTTONDOWN :
          if event.button == 1:
             pass
