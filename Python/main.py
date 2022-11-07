@@ -48,7 +48,13 @@ with open(PATH) as f:
 #   print(f.tell())
    cursor = f.tell()
 #ao_output.output("Hello Crusaders!", True)
-win.send('hhf')  # Send keys, as if typed (performs ahk string escapes)
+win.send("h")
+time.sleep(.1)
+win.send("f")
+time.sleep(.1)
+win.send("hgggghhhhghhhg")
+time.sleep(.1)
+win.send("f")
 
 updated = os.path.getmtime(PATH)
 while True:
