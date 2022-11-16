@@ -14,10 +14,19 @@ import autoit
 import accessible_output2.outputs.auto
 
 from pynput import keyboard
-
+modifiers = {}
+modifiers["test"] = True
+del modifiers['test']
+print(len(modifiers))
 def on_press(key):
-   if key == keyboard.Key.f1:
+   if key = keyboard.Key.control:
+      modifiers[key] = True
+   elif key == keyboard.Key.f1:
       win.send("{F1}")
+   elif key == keyboard.Key.f2:
+      win.send("{F2}")
+   elif key == keyboard.Key.f3:
+      win.send("{F3}")
 
 """         elif event.key == pygame.K_F2 and pygame.key.get_mods() == 0 :
             win.send("{F2}")
