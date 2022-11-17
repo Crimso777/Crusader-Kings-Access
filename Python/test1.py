@@ -1,4 +1,7 @@
 import wx
+
+actions = {}
+actions[wx.WXK_ESCAPE] = lambda self: self.GetParent().Close()
 ########################################################################
 class MyPanel(wx.Panel):
     """"""
@@ -15,8 +18,11 @@ class MyPanel(wx.Panel):
         Check for ESC key press and exit is ESC is pressed
         """
         key_code = event.GetKeyCode()
-        if key_code == wx.WXK_ESCAPE:
-            self.GetParent().Close()
+        try:
+            actions[key_code](self)
+        except:
+            pass
+#            self.GetParent().Close()
         else:
             event.Skip()
         
