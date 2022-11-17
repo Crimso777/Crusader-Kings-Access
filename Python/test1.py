@@ -15,8 +15,7 @@ class MyPanel(wx.Panel):
         Check for ESC key press and exit is ESC is pressed
         """
         key_code = event.GetKeyCode()
-#        if key_code == wx.WXK_ESCAPE:
-        if key_code == wx.WXK_CONTROL_A:
+        if key_code == wx.WXK_ESCAPE:
             self.GetParent().Close()
         else:
             event.Skip()
