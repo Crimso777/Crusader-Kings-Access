@@ -1,5 +1,19 @@
 import wx
+import os
+import json
 
+cwd = os.getcwd()
+settings_path = os.path.join(cwd, "settings.json")
+if not (os.path.isfile(settings_path)):
+    dict = {"path": ""}
+    json_object = json.dumps(dict, indent=4)
+    with open("settings.json", "w") as outfile:
+        outfile.write(json_object)
+
+with open('settings.json', 'r') as openfile: 
+    # Reading from json file
+    json_object = json.load(openfile)
+    path = json_object["path"]
 actions = {}
 actions[wx.WXK_ESCAPE] = lambda self: self.GetParent().Close()
 ########################################################################
@@ -41,4 +55,21 @@ class MyFrame(wx.Frame):
 if __name__ == "__main__":
     app = wx.App(False)
     frame = MyFrame()
-    app.MainLoop()
+    if not(os.path.isfile(path) and os.path.basename(path) == "debug.log"):
+# Create open file dialog
+        openFileDialog = wx.FileDialog(frame, "Open", "", "", 
+          "Log files (*.log)|*.log", 
+           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+
+        openFileDialog.ShowModal()
+        path = openFileDialog.GetPath()
+        openFileDialog.Destroy()
+    if os.path.isfile(path) and os.path.basename(path) == "debug.log":
+        with open('settings.json', 'r') as openfile: 
+            settings = json.load(openfile)
+        settings["path"] = path
+        json_object = json.dumps(settings, indent=4)
+
+        with open("settings.json", "w") as outfile:
+            outfile.write(json_object)
+        app.MainLoop()
