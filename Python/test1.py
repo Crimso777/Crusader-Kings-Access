@@ -1,3 +1,5 @@
+import accessible_output2.outputs.auto
+ao_output = accessible_output2.outputs.auto.Auto()
 import wx
 import os
 import json
@@ -15,7 +17,23 @@ with open('settings.json', 'r') as openfile:
     json_object = json.load(openfile)
     path = json_object["path"]
 actions = {}
-actions[wx.WXK_ESCAPE] = lambda self: self.GetParent().Close()
+actions[wx.WXK_ESCAPE] = lambda: frame.Close()
+control_actions = {}
+control_actions[65] = lambda: ao_output.output("Hello A-Key!", True)
+control_actions[69] = lambda: ao_output.output("Hello E-Key!", True)
+control_actions[81] = lambda: ao_output.output("Hello Q-Key!", True)
+control_actions[83] = lambda: ao_output.output("Hello S-Key!", True)
+control_actions[87] = lambda: ao_output.output("Hello W-Key!", True)
+control_actions[wx.WXK_F9] = lambda: ao_output.output("Hello F9!", True)
+shift_actions = {}
+shift_actions[69] = lambda: ao_output.output("Hello E-Key!", True)
+shift_actions[81] = lambda: ao_output.output("Hello Q-Key!", True)
+shift_actions[87] = lambda: ao_output.output("Hello W-Key!", True)
+
+handler = {}
+handler[wx.MOD_NONE] = actions
+handler[wx.MOD_CONTROL] = control_actions
+handler[wx.MOD_SHIFT] = shift_actions
 ########################################################################
 class MyPanel(wx.Panel):
     """"""
@@ -25,18 +43,34 @@ class MyPanel(wx.Panel):
         wx.Panel.__init__(self, parent)
         
         self.Bind(wx.EVT_KEY_DOWN, self.onKey)
-        
+#        self.Bind(wx.EVT_CHAR, self.onKey)
+
     #----------------------------------------------------------------------
     def onKey(self, event):
         """
         Check for ESC key press and exit is ESC is pressed
         """
         key_code = event.GetKeyCode()
-        try:
-            actions[key_code](self)
-        except:
-            pass
-#            self.GetParent().Close()
+        mods = event.GetModifiers()
+        if mods in handler and key_code in handler[mods]:
+            handler[mods][key_code]()
+#        if not(event.HasAnyModifiers()):
+#            try:
+#                actions[key_code](self)
+#            except:
+#                pass
+##            self.GetParent().Close()
+#        elif event.GetModifiers() == wx.MOD_CONTROL:
+#            try:
+#                control_actions[key_code]()
+#            except:
+#                pass
+#        elif event.GetModifiers() == wx.MOD_SHIFT:
+#            try:
+#                shift_actions[key_code]()
+#            except:
+#                pass
+            
         else:
             event.Skip()
         
