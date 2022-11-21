@@ -142,8 +142,10 @@ button = {
 			name = _show
 			on_start = "[GetScriptedGui( 'speak_registry' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 			on_finish = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+
 		}
 	}
+
 }
 
 	flowcontainer = {
