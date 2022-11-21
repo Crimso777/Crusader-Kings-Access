@@ -1,8 +1,31 @@
+
+import threading
 import accessible_output2.outputs.auto
 ao_output = accessible_output2.outputs.auto.Auto()
 import wx
 import os
 import json
+def read_loop():
+    cursor = 0
+    with open(path) as f:
+        f.seek(0,2)
+        print(f.tell())
+        cursor = f.tell()
+    updated = os.path.getmtime(path)
+    while True:
+        if updated != os.path.getmtime(path):
+            with open(PATH) as f:
+                f.seek(cursor, 0)
+                buffer = f.read()
+                pattern = "(<out>)(..*)(</out>)"
+                match = re.search(pattern, buffer)
+                if match:
+                    ao_output.output(match.group(2), True)
+                f.seek(0,2)
+                cursor = f.tell()
+
+            updated = os.path.getmtime(path)
+
 
 cwd = os.getcwd()
 settings_path = os.path.join(cwd, "settings.json")
@@ -12,7 +35,7 @@ if not (os.path.isfile(settings_path)):
     with open("settings.json", "w") as outfile:
         outfile.write(json_object)
 
-with open('settings.json', 'r') as openfile:
+with open('settings.json', 'r') as openfile: 
     # Reading from json file
     json_object = json.load(openfile)
     path = json_object["path"]
@@ -43,6 +66,21 @@ actions[wx.WXK_F5] = lambda: ao_output.output("Open courtiers window", True)
 actions[wx.WXK_F6] = lambda: ao_output.output("Open intrigues window", True)
 actions[wx.WXK_F7] = lambda: ao_output.output("Open decisions window", True)
 actions[wx.WXK_ESCAPE] = lambda: frame.Close()
+# Army keybinds
+actions[70] = lambda: ao_output.output("Split in half", True)
+actions[71] = lambda: ao_output.output("Merge.", True)
+actions[72] = lambda: ao_output.output("Split off new Army.", True)
+actions[74] = lambda: ao_output.output("Disband.", True)
+#Camera controls
+actions[wx.WXK_LEFT] = lambda: ao_output.output("Move Camera Left", True)
+actions[wx.WXK_UP] = lambda: ao_output.output("Move Camera Up", True)
+actions[wx.WXK_DOWN] = lambda: ao_output.output("Move Camera Down", True)
+actions[wx.WXK_RIGHT] = lambda: ao_output.output("Move Camera Right", True)
+actions[65] = lambda: ao_output.output("Move Camera Left", True)
+actions[87] = lambda: ao_output.output("Move Camera Up", True)
+actions[83] = lambda: ao_output.output("Move Camera Down", True)
+actions[68] = lambda: ao_output.output("Move Camera Right", True)
+
 control_actions = {}
 control_actions[65] = lambda: ao_output.output("Counties", True)
 control_actions[69] = lambda: ao_output.output("Terrain", True)
@@ -59,15 +97,17 @@ handler = {}
 handler[wx.MOD_NONE] = actions
 handler[wx.MOD_CONTROL] = control_actions
 handler[wx.MOD_SHIFT] = shift_actions
-########################################################################
+#########################################################################
 class MyPanel(wx.Panel):
     """"""
     #----------------------------------------------------------------------
     def __init__(self, parent):
         """Constructor"""
-        wx.Panel.__init__(self, parent)
-
+        wx.Panel.__init__(self, parent, style = wx.WANTS_CHARS)
+        
         self.Bind(wx.EVT_KEY_DOWN, self.onKey)
+#       button = wx.Button(self, label="Test Shift")
+#       button.Bind(wx.EVT_KEY_DOWN, self.onKeyDown)
 #        self.Bind(wx.EVT_CHAR, self.onKey)
 
     #----------------------------------------------------------------------
@@ -95,40 +135,43 @@ class MyPanel(wx.Panel):
 #                shift_actions[key_code]()
 #            except:
 #                pass
-
+            
         else:
             event.Skip()
-
-
+        
+    
 ########################################################################
 class MyFrame(wx.Frame):
     """"""
     #----------------------------------------------------------------------
     def __init__(self):
         """Constructor"""
-        wx.Frame.__init__(self, None, title="Test FullScreen")
+        wx.Frame.__init__(self, None, title="Mod screen test")
         panel = MyPanel(self)
         self.ShowFullScreen(True)
         self.SetTransparent(1)
-
+        
 if __name__ == "__main__":
     app = wx.App(False)
     frame = MyFrame()
     if not(os.path.isfile(path) and os.path.basename(path) == "debug.log"):
 # Create open file dialog
-        openFileDialog = wx.FileDialog(frame, "Open", "", "",
-          "Log files (*.log)|*.log",
+        openFileDialog = wx.FileDialog(frame, "Open", "", "", 
+          "Log files (*.log)|*.log", 
            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 
         openFileDialog.ShowModal()
         path = openFileDialog.GetPath()
         openFileDialog.Destroy()
     if os.path.isfile(path) and os.path.basename(path) == "debug.log":
-        with open('settings.json', 'r') as openfile:
+        with open('settings.json', 'r') as openfile: 
             settings = json.load(openfile)
         settings["path"] = path
         json_object = json.dumps(settings, indent=4)
 
         with open("settings.json", "w") as outfile:
             outfile.write(json_object)
+        t1 = threading.Thread(target=read_loop, args=())
+        t1.daemon = True  # thread dies with the program
+        t1.start()
         app.MainLoop()

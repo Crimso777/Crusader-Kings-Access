@@ -41,8 +41,6 @@ with open('settings.json', 'r') as openfile:
     path = json_object["path"]
 actions = {}
 actions[wx.WXK_ESCAPE] = lambda: frame.Close()
-#actions[wx.WXK_TAB] = lambda: ao_output.output("Hi!", True)
-#actions[wx.WXK_TAB] = labda: ao_output.output("Hi!")
 control_actions = {}
 control_actions[65] = lambda: ao_output.output("Hello A-Key!", True)
 control_actions[69] = lambda: ao_output.output("Hello E-Key!", True)
@@ -86,7 +84,7 @@ actions[89] = lambda: ao_output.output("Houses shown.", True)
 actions[70] = lambda: ao_output.output("Split in half", True)
 actions[71] = lambda: ao_output.output("Merge.", True)
 actions[72] = lambda: ao_output.output("Split off new Army.", True)
-actions[73] = lambda: ao_output.output("Disband.", True)
+actions[74] = lambda: ao_output.output("Disband.", True)
 # How to have keys able to pressed without CONTROL,SHIFT, ALT etc?
 # Doesn't seem to work when I use MOD_ALL or MOD_NONE
 # - Shane
@@ -102,7 +100,7 @@ class MyPanel(wx.Panel):
     #----------------------------------------------------------------------
     def __init__(self, parent):
         """Constructor"""
-        wx.Panel.__init__(self, parent)
+        wx.Panel.__init__(self, parent, style = wx.WANTS_CHARS)
         
         self.Bind(wx.EVT_KEY_DOWN, self.onKey)
 #       button = wx.Button(self, label="Test Shift")
