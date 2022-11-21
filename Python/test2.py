@@ -1,8 +1,31 @@
+
+import threading
 import accessible_output2.outputs.auto
 ao_output = accessible_output2.outputs.auto.Auto()
 import wx
 import os
 import json
+def read_loop():
+    cursor = 0
+    with open(path) as f:
+        f.seek(0,2)
+        print(f.tell())
+        cursor = f.tell()
+    updated = os.path.getmtime(path)
+    while True:
+        if updated != os.path.getmtime(path):
+            with open(PATH) as f:
+                f.seek(cursor, 0)
+                buffer = f.read()
+                pattern = "(<out>)(..*)(</out>)"
+                match = re.search(pattern, buffer)
+                if match:
+                    ao_output.output(match.group(2), True)
+                f.seek(0,2)
+                cursor = f.tell()
+
+            updated = os.path.getmtime(path)
+
 
 cwd = os.getcwd()
 settings_path = os.path.join(cwd, "settings.json")
@@ -147,4 +170,7 @@ if __name__ == "__main__":
 
         with open("settings.json", "w") as outfile:
             outfile.write(json_object)
+        t1 = threading.Thread(target=read_loop, args=())
+        t1.daemon = True  # thread dies with the program
+        t1.start()
         app.MainLoop()
