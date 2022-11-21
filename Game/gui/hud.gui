@@ -1,4 +1,4 @@
-######################################################
+﻿######################################################
 #################### META INFO #######################
 ######################################################
 
@@ -131,17 +131,15 @@ button = {
 		}
 
 	}
-
-#Character Left Click event handler.
-#Opcode == 1
-#Args used: arg1
+#Character Status	
+#Opcode == 3
+#Args used: none
 	button = {
 		visible = "[EqualTo_CFixedPoint(GetGlobalVariable('opcode').GetValue, '(CFixedPoint)3.0')]"
 		position = { 0 0 }
 		size = { 0 0 }
 		state = {
 			name = _show
-
 			on_start = "[GetScriptedGui( 'speak_registry' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 			on_finish = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 
