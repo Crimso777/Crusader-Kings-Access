@@ -36,38 +36,34 @@ shift_actions[32] = lambda: ao_output.output("Hello Space-Key!", True)
 
 ########################################################################
 # Shane's test code
-#actions[9] = lambda: ao_output.output("Tab key works!", True)
-alt_actions = {}
-#handler[wx.MOD_NONE] = test_actions
 ao_output.output("Welcome to crusader kings")
-alt_actions[wx.WXK_SPACE] = lambda: ao_output.output("Space key works!", True)
-alt_actions[32] = lambda: ao_output.output("Space key works!", True)
-alt_actions[wx.WXK_SPACE] = lambda: print("Space key pressed!", True)
-alt_actions[82] = lambda: ao_output.output("Faiths shown.", True)
-alt_actions[67] = lambda: ao_output.output("Character finder.", True)
-alt_actions[9] = lambda: ao_output.output("Issues.", True)
-alt_actions[66] = lambda: ao_output.output("Back.", True)
-alt_actions[wx.WXK_F1] = lambda: ao_output.output("Player character guide.", True)
-alt_actions[wx.WXK_F2] = lambda: ao_output.output("Realm.", True)
-alt_actions[wx.WXK_F3] = lambda: ao_output.output("Military (Warfare, Army, Hired Forces).", True)
-alt_actions[wx.WXK_F4] = lambda: ao_output.output("Council.", True)
-alt_actions[wx.WXK_F5] = lambda: ao_output.output("Court (Prisoners)", True)
-alt_actions[wx.WXK_F6] = lambda: ao_output.output("Intruige (Schemes, Hooks, Secrets)", True)
-alt_actions[wx.WXK_F7] = lambda: ao_output.output("Factions", True)
-alt_actions[wx.WXK_F8] = lambda: ao_output.output("Decisions", True)
-alt_actions[84] = lambda: ao_output.output("Cultures shown.", True)
-alt_actions[89] = lambda: ao_output.output("Houses shown.", True)
+actions[wx.WXK_SPACE] = lambda: ao_output.output("Space key works!", True)
+actions[32] = lambda: ao_output.output("Space key works!", True)
+#actions[wx.WXK_SPACE] = lambda: ao_output.output("Space key pressed!", True)
+actions[82] = lambda: ao_output.output("Faiths shown.", True)
+actions[67] = lambda: ao_output.output("Character finder.", True)
+actions[9] = lambda: ao_output.output("Issues.", True)
+actions[66] = lambda: ao_output.output("Back.", True)
+actions[wx.WXK_F1] = lambda: ao_output.output("Player character guide.", True)
+actions[wx.WXK_F2] = lambda: ao_output.output("Realm.", True)
+actions[wx.WXK_F3] = lambda: ao_output.output("Military (Warfare, Army, Hired Forces).", True)
+actions[wx.WXK_F4] = lambda: ao_output.output("Council.", True)
+actions[wx.WXK_F5] = lambda: ao_output.output("Court (Prisoners)", True)
+actions[wx.WXK_F6] = lambda: ao_output.output("Intruige (Schemes, Hooks, Secrets)", True)
+actions[wx.WXK_F7] = lambda: ao_output.output("Factions", True)
+actions[wx.WXK_F8] = lambda: ao_output.output("Decisions", True)
+actions[84] = lambda: ao_output.output("Cultures shown.", True)
+actions[89] = lambda: ao_output.output("Houses shown.", True)
 #TODO: Find out how the EVT_KEY_DOWN key events work so I can
 # bind keys such as ones you need to hold one key and press another such as
 # Cntrl S for governments etc. Maybe we use MOD_CONTROL for these keys?
 # Need to figure out how to the key presses to work first without requiring a control, shift, alt etc.
 
 # Army keybinds
-alt_actions[70] = lambda: ao_output.output("Split in half", True)
-alt_actions[71] = lambda: ao_output.output("Merge.", True)
-alt_actions[72] = lambda: ao_output.output("Split off new Army.", True)
-alt_actions[73] = lambda: ao_output.output("Disband.", True)
-
+actions[70] = lambda: ao_output.output("Split in half", True)
+actions[71] = lambda: ao_output.output("Merge.", True)
+actions[72] = lambda: ao_output.output("Split off new Army.", True)
+actions[73] = lambda: ao_output.output("Disband.", True)
 # How to have keys able to pressed without CONTROL,SHIFT, ALT etc?
 # Doesn't seem to work when I use MOD_ALL or MOD_NONE
 # - Shane
@@ -75,7 +71,7 @@ handler = {}
 handler[wx.MOD_NONE] = actions
 handler[wx.MOD_CONTROL] = control_actions
 handler[wx.MOD_SHIFT] = shift_actions
-handler[wx.MOD_ALT] = alt_actions
+#handler[wx.MOD_ALT] = alt_actions
 
 #########################################################################
 class MyPanel(wx.Panel):
