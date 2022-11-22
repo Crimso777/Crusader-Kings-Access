@@ -140,7 +140,7 @@ button = {
 		size = { 0 0 }
 		state = {
 			name = _show
-			on_start = "[GetScriptedGui( 'speak_registry' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+			on_start = "[GetScriptedGui( 'speak_status' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 			on_finish = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 
 		}

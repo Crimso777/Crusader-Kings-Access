@@ -1,0 +1,11 @@
+﻿speak_status = {
+
+	scope = character
+
+	saved_scopes = {} 		# any additional targets
+	is_valid = {} 		# can the player use it?
+
+	effect = {			# what it does
+	debug_log = "<out>You have [THIS.Char.GetGold] gold, [THIS.Char.GetBalance] monthly income, [THIS.Char.GetPrestige] prestige, [THIS.Char.GetPrestigeTooltipWithBalance]</out>"
+}
+}
