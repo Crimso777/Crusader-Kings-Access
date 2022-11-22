@@ -1,3 +1,11 @@
+from ahk import AHK
+from ahk.window import Window
+ahk = AHK()
+win = ahk.win_get(title='Crusader Kings III')  # by title
+import time
+import re
+import os
+import sys
 
 import threading
 import accessible_output2.outputs.auto
@@ -14,7 +22,7 @@ def read_loop():
     updated = os.path.getmtime(path)
     while True:
         if updated != os.path.getmtime(path):
-            with open(PATH) as f:
+            with open(path) as f:
                 f.seek(cursor, 0)
                 buffer = f.read()
                 pattern = "(<out>)(..*)(</out>)"
@@ -52,7 +60,7 @@ actions[69] = lambda: ao_output.output("Realms view", True)
 actions[73] = lambda: ao_output.output("Kingdom titles", True)
 actions[79] = lambda: ao_output.output("Empire titles", True)
 actions[82] = lambda: ao_output.output("Faiths view", True)
-actions[84] = lambda: ao_output.output("Cultures", True)
+actions[84] = lambda:     win.send("hhf") #    ao_output.output("Cultures", True)
 actions[85] = lambda: ao_output.output("Duchy titles", True)
 actions[86] = lambda: ao_output.output("Find title", True)
 actions[88] = lambda: ao_output.output("Game speed faster", True)
