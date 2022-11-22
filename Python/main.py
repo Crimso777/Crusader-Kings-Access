@@ -1,383 +1,189 @@
-PATH = "C:/Users/Tomrio/Documents/Paradox Interactive/Crusader Kings III/logs/debug.log"
 from ahk import AHK
 from ahk.window import Window
 ahk = AHK()
-import pygame
+win = ahk.win_get(title='Crusader Kings III')  # by title
 import time
 import re
 import os
 import sys
+
+import threading
 import win32api
 import win32con
 import win32gui
-import autoit
 import accessible_output2.outputs.auto
-
-<<<<<<< HEAD
-=======
-from pynput import keyboard
-modifiers = {}
-modifiers["test"] = True
-del modifiers['test']
-print(len(modifiers))
-def on_press(key):
-   if key = keyboard.Key.control:
-      modifiers[key] = True
-   elif key == keyboard.Key.f1:
-      win.send("{F1}")
-   elif key == keyboard.Key.f2:
-      win.send("{F2}")
-   elif key == keyboard.Key.f3:
-      win.send("{F3}")
-
-"""         elif event.key == pygame.K_F2 and pygame.key.get_mods() == 0 :
-            win.send("{F2}")
-         elif event.key == pygame.K_F3 and pygame.key.get_mods() == 0 :
-            win.send("{F3}")
-         elif event.key == pygame.K_F4 and pygame.key.get_mods() == 0 :
-            win.send("{F4}")
-         elif event.key == pygame.K_F5 and pygame.key.get_mods() == 0 :
-            win.send("{F5}")
-         elif event.key == pygame.K_F6 and pygame.key.get_mods() == 0 :
-            win.send("{F6}")
-         elif event.key == pygame.K_F7 and pygame.key.get_mods() == 0 :
-            win.send("{F7}")
-         elif event.key == pygame.K_F8 and pygame.key.get_mods() == 0 :
-            win.send("{F8}")
-         elif event.key == pygame.K_F9 and pygame.key.get_mods() == 0 :
-            win.send("{F9}")
-         elif event.key == pygame.K_c and pygame.key.get_mods() == 0 :
-            win.send("c")
-         elif event.key == pygame.K_v and pygame.key.get_mods() == 0 :
-            win.send("v")
-         elif event.key == pygame.K_BACKQUOTE and pygame.key.get_mods() == 0 :
-            win.send("`")
-         elif event.key == pygame.K_ESCAPE and pygame.key.get_mods() == 0 :
-            win.send("{ESC}")
-         elif event.key == pygame.K_b and pygame.key.get_mods() == 0 :
-            win.send("b")
-         elif event.key == pygame.K_F9 and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}{F9}{CTRLUP}")
-
-         elif event.key == pygame.K_e and pygame.key.get_mods() == 0 :
-            win.send("e")
-         elif event.key == pygame.K_a and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}a{CTRLUP}")
-         elif event.key == pygame.K_a and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}a{CTRLUP}")
-
-         elif (event.key == pygame.K_u and pygame.key.get_mods() == 0) or (event.key == pygame.K_q and pygame.key.get_mods() & pygame.KMOD_SHIFT):
-            win.send("u")
-         elif (event.key == pygame.K_i and pygame.key.get_mods() == 0) or (event.key == pygame.K_w and pygame.key.get_mods() & pygame.KMOD_SHIFT):
-            win.send("i")
-         elif (event.key == pygame.K_o and pygame.key.get_mods() == 0) or (event.key == pygame.K_e and pygame.key.get_mods() & pygame.KMOD_SHIFT):
-            win.send("o")
-         elif event.key == pygame.K_r and pygame.key.get_mods() == 0 :
-            win.send("r")
-         elif event.key == pygame.K_t and pygame.key.get_mods() == 0 :
-            win.send("t")
-         elif event.key == pygame.K_y and pygame.key.get_mods() == 0 :
-            win.send("y")
-         elif event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}s{CTRLUP}")
-         elif event.key == pygame.K_q and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}q{CTRLUP}")
-         elif event.key == pygame.K_e and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}e{CTRLUP}")
-         elif event.key == pygame.K_w and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}w{CTRLUP}")
-#Map movement controls
-         elif event.key == pygame.K_UP and pygame.key.get_mods() == 0 :
-            win.send("{UP}")
-         elif event.key == pygame.K_DOWN and pygame.key.get_mods() == 0 :
-            win.send('hhf')  # Send keys, as if typed (performs ahk string escapes)
-
-#            win.send("{DOWN}")
-         elif event.key == pygame.K_LEFT and pygame.key.get_mods() == 0 :
-#            win.send("{LEFT}")
-            win.send("h")
-            time.sleep(.1)
-            win.send("f")
-            time.sleep(.1)
-            win.send("hgggghhhhghhhg")
-            time.sleep(.1)
-            win.send("f")
-
-         elif event.key == pygame.K_RIGHT and pygame.key.get_mods() == 0 :
-#            win.send("hgggghgghgghgg")
-            win.send("hg")
-            time.sleep(.1)
-            win.send("f")
-            time.sleep(.1)
-
-            win.send("hgggghgghgghgg")
-            time.sleep(.1)
-            win.send("f")
-
-#            win.send("{RIGHT}")
-         elif event.key == pygame.K_HOME and pygame.key.get_mods() == 0 :
-            win.send("{HOME}")
-         elif event.key == pygame.K_PAGEUP and pygame.key.get_mods() == 0 :
-            win.send("{PGUP}")
-         elif event.key == pygame.K_PAGEDOWN and pygame.key.get_mods() == 0 :
-            win.send("{PGDN}")
-         elif event.key == pygame.K_f and pygame.key.get_mods() == 0 :
-            win.send("f")
-         elif event.key == pygame.K_g and pygame.key.get_mods() == 0 :
-            win.send("g")
-         elif event.key == pygame.K_h and pygame.key.get_mods() == 0 :
-            win.send("h")
-         elif event.key == pygame.K_j and pygame.key.get_mods() == 0 :
-            win.send("j")
-         elif event.key == pygame.K_1 and pygame.key.get_mods() == 0 :
-            win.send("1")
-         elif event.key == pygame.K_2 and pygame.key.get_mods() == 0 :
-            win.send("2")
-         elif event.key == pygame.K_3 and pygame.key.get_mods() == 0 :
-            win.send("3")
-         elif event.key == pygame.K_4 and pygame.key.get_mods() == 0 :
-            win.send("4")
-         elif event.key == pygame.K_5 and pygame.key.get_mods() == 0 :
-            win.send("5")
-         elif event.key == pygame.K_z and pygame.key.get_mods() == 0 :
-            win.send("z")
-         elif event.key == pygame.K_x and pygame.key.get_mods() == 0 :
-            win.send("x")
-         elif event.key == pygame.K_MINUS and pygame.key.get_mods() == 0 :
-            win.send("-")
-         elif event.key == pygame.K_KP_MINUS and (pygame.key.get_mods()  == 0 or (pygame.key.get_mods() & pygame.KMOD_NUM	)):
-            win.send("{NUMPADSUB}")
-         elif event.key == pygame.K_KP_PLUS and (pygame.key.get_mods()  == 0 or (pygame.key.get_mods() & pygame.KMOD_NUM	)):
-            win.send("{NUMPADADD}")
-         elif event.key == pygame.K_SPACE and pygame.key.get_mods() == 0 :
-            win.send("{SPACE}")
-         elif event.key == pygame.K_F11 and pygame.key.get_mods() == 0 :
-            win.send("{F11}")
-         elif event.key == pygame.K_F11 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
-            win.send("{SHIFTDOWN}{F11}{SHIFTUP}")
-         elif event.key == pygame.K_F12 and pygame.key.get_mods() == 0 :
-            win.send("{F12}")
-"""
-def on_release(key):
-    pass
-listener = keyboard.Listener(
-    on_press=on_press,
-    on_release=on_release)
-
->>>>>>> 02f5ff32e89e782b857e736dd9a72368acf69e4a
-window_id = win32gui.FindWindow("SDL_app", "Crusader Kings")
-win = ahk.find_window(title=b'Crusader Kings III') # Find the opened window#
-#win = Window.from_pid(ahk, pid=window_id)                 # by process IDprint(window_id)
-print(win.title)
-#autoit.mouse_move(50,50,0)
-#win.send("{F1}")
-
 ao_output = accessible_output2.outputs.auto.Auto()
+import wx
+import os
+import json
+def read_loop():
+    cursor = 0
+    with open(path) as f:
+        f.seek(0,2)
+        print(f.tell())
+        cursor = f.tell()
+    updated = os.path.getmtime(path)
+    while True:
+        if updated != os.path.getmtime(path):
+            with open(path) as f:
+                f.seek(cursor, 0)
+                buffer = f.read()
+                pattern = "(<out>)(..*)(</out>)"
+                match = re.search(pattern, buffer)
+                if match:
+                    ao_output.output(match.group(2), True)
+                f.seek(0,2)
+                cursor = f.tell()
 
-pygame.init()
-pygame.display.set_caption("Crusader Kings 3 Access")
-infoObject = pygame.display.Info()
-screen = pygame.display.set_mode((infoObject.current_w , infoObject.current_h ), pygame.NOFRAME) # For borderless, use pygame.NOFRAME
-#done = False
-fuchsia = (255, 0, 128)  # Transparency color
-
-# Create layered window
-hwnd = pygame.display.get_wm_info()["window"]
-win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
-                       win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
-# Set window transparency color
-win32gui.SetLayeredWindowAttributes(hwnd, win32api.RGB(*fuchsia), 100, win32con.LWA_ALPHA )
-
-screen.fill(fuchsia)  # Transparent background
-pygame.display.update()
-#pause = input("Press enter to continue")
-num_lines = 0
-cursor = 0
-with open(PATH) as f:
-   for i, line in enumerate(f):
-      num_lines = num_lines + 1  # process line i
-   f.seek(0,2)
-#   print(f.tell())
-   cursor = f.tell()
-ao_output.output("Hello Crusaders!", True)
-
-updated = os.path.getmtime(PATH)
-listener.start()
-while True:
-   if updated != os.path.getmtime(PATH):
-      count = 0
-      with open(PATH) as f:
-         f.seek(cursor, 0)
-#         cursor = f.tell()
-         buffer = f.read()
-         pattern = "(<out>)(..*)(</out>)"
-         match = re.search(pattern, buffer)
-         if match:
-            ao_output.output(match.group(2), True)
-         f.seek(cursor, 0)
-         for i, line in enumerate(f):
-            count = count + 1
-         f.seek(0,2)
-         cursor = f.tell()
+            updated = os.path.getmtime(path)
 
 
-      updated = os.path.getmtime(PATH)
-      num_lines = num_lines + count
-#      print(cursor)
-#      print(count)
-#      print(num_lines)
+cwd = os.getcwd()
+settings_path = os.path.join(cwd, "settings.json")
+if not (os.path.isfile(settings_path)):
+    dict = {"path": ""}
+    json_object = json.dumps(dict, indent=4)
+    with open("settings.json", "w") as outfile:
+        outfile.write(json_object)
 
-       
-    # creating a loop to check events that
-    # are occurring
-   for event in pygame.event.get():
-      if event.type == pygame.KEYDOWN:
-<<<<<<< HEAD
-         if event.key == pygame.K_F1 and pygame.key.get_mods() == 0 :
-            win.send("{F1}")
-         elif event.key == pygame.K_F2 and pygame.key.get_mods() == 0 :
-            win.send("{F2}")
-         elif event.key == pygame.K_F3 and pygame.key.get_mods() == 0 :
-            win.send("{F3}")
-         elif event.key == pygame.K_F4 and pygame.key.get_mods() == 0 :
-            win.send("{F4}")
-         elif event.key == pygame.K_F5 and pygame.key.get_mods() == 0 :
-            win.send("{F5}")
-         elif event.key == pygame.K_F6 and pygame.key.get_mods() == 0 :
-            win.send("{F6}")
-         elif event.key == pygame.K_F7 and pygame.key.get_mods() == 0 :
-            win.send("{F7}")
-         elif event.key == pygame.K_F8 and pygame.key.get_mods() == 0 :
-            win.send("{F8}")
-         elif event.key == pygame.K_F9 and pygame.key.get_mods() == 0 :
-            win.send("{F9}")
-         elif event.key == pygame.K_c and pygame.key.get_mods() == 0 :
-            win.send("c")
-         elif event.key == pygame.K_v and pygame.key.get_mods() == 0 :
-            win.send("v")
-         elif event.key == pygame.K_BACKQUOTE and pygame.key.get_mods() == 0 :
-            win.send("`")
-         elif event.key == pygame.K_ESCAPE and pygame.key.get_mods() == 0 :
-            win.send("{ESC}")
-         elif event.key == pygame.K_b and pygame.key.get_mods() == 0 :
-            win.send("b")
-         elif event.key == pygame.K_F9 and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}{F9}{CTRLUP}")
+with open('settings.json', 'r') as openfile: 
+    # Reading from json file
+    json_object = json.load(openfile)
+    path = json_object["path"]
+actions = {}
+actions[wx.WXK_TAB] = lambda: ao_output.output("Current Situation", True)
+actions[32] = lambda: ao_output.output("Pause or Unpause", True)
+actions[49] = lambda: ao_output.output("Slowest", True)
+actions[50] = lambda: ao_output.output("Slow", True)
+actions[51] = lambda: ao_output.output("Normal", True)
+actions[52] = lambda: ao_output.output("Fast", True)
+actions[53] = lambda: ao_output.output("Fastest", True)
+actions[67] = lambda: ao_output.output("Character finder", True)
+actions[69] = lambda: ao_output.output("Realms view", True)
+actions[73] = lambda: ao_output.output("Kingdom titles", True)
+actions[79] = lambda: ao_output.output("Empire titles", True)
+actions[82] = lambda: ao_output.output("Faiths view", True)
+actions[84] = lambda:     win.send("hhf") #    ao_output.output("Cultures", True)
+actions[85] = lambda: ao_output.output("Duchy titles", True)
+actions[86] = lambda: ao_output.output("Find title", True)
+actions[88] = lambda: ao_output.output("Game speed faster", True)
+actions[89] = lambda: ao_output.output("Houses", True)
+actions[90] = lambda: ao_output.output("Game speed slower", True)
+actions[wx.WXK_F1] = lambda: ao_output.output("Open Character window", True)
+actions[wx.WXK_F2] = lambda: ao_output.output("Open domain window", True)
+actions[wx.WXK_F3] = lambda: ao_output.output("Open military window", True)
+actions[wx.WXK_F4] = lambda: ao_output.output("Open council window", True)
+actions[wx.WXK_F5] = lambda: ao_output.output("Open courtiers window", True)
+actions[wx.WXK_F6] = lambda: ao_output.output("Open intrigues window", True)
+actions[wx.WXK_F7] = lambda: ao_output.output("Open decisions window", True)
+actions[wx.WXK_ESCAPE] = lambda: frame.Close()
+# Army keybinds
+actions[70] = lambda: ao_output.output("Split in half", True)
+actions[71] = lambda: ao_output.output("Merge.", True)
+actions[72] = lambda: ao_output.output("Split off new Army.", True)
+actions[74] = lambda: ao_output.output("Disband.", True)
+#Camera controls
+actions[wx.WXK_LEFT] = lambda: ao_output.output("Move Camera Left", True)
+actions[wx.WXK_UP] = lambda: ao_output.output("Move Camera Up", True)
+actions[wx.WXK_DOWN] = lambda: ao_output.output("Move Camera Down", True)
+actions[wx.WXK_RIGHT] = lambda: ao_output.output("Move Camera Right", True)
+actions[65] = lambda: ao_output.output("Move Camera Left", True)
+actions[87] = lambda: ao_output.output("Move Camera Up", True)
+actions[83] = lambda: ao_output.output("Move Camera Down", True)
+actions[68] = lambda: ao_output.output("Move Camera Right", True)
 
-         elif event.key == pygame.K_e and pygame.key.get_mods() == 0 :
-            win.send("e")
-         elif event.key == pygame.K_a and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}a{CTRLUP}")
-         elif event.key == pygame.K_a and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}a{CTRLUP}")
+control_actions = {}
+control_actions[65] = lambda: ao_output.output("Counties", True)
+control_actions[69] = lambda: ao_output.output("Terrain", True)
+control_actions[81] = lambda: ao_output.output("Governments", True)
+control_actions[83] = lambda: ao_output.output("Players", True)
+control_actions[87] = lambda: ao_output.output("Developments", True)
+control_actions[wx.WXK_F9] = lambda: ao_output.output("Hide User Interface", True)
+shift_actions = {}
+shift_actions[69] = lambda: ao_output.output("Empire Titles", True)
+shift_actions[81] = lambda: ao_output.output("Duchy titles", True)
+shift_actions[87] = lambda: ao_output.output("Kingdom Titles", True)
 
-         elif (event.key == pygame.K_u and pygame.key.get_mods() == 0) or (event.key == pygame.K_q and pygame.key.get_mods() & pygame.KMOD_SHIFT):
-            win.send("u")
-         elif (event.key == pygame.K_i and pygame.key.get_mods() == 0) or (event.key == pygame.K_w and pygame.key.get_mods() & pygame.KMOD_SHIFT):
-            win.send("i")
-         elif (event.key == pygame.K_o and pygame.key.get_mods() == 0) or (event.key == pygame.K_e and pygame.key.get_mods() & pygame.KMOD_SHIFT):
-            win.send("o")
-         elif event.key == pygame.K_r and pygame.key.get_mods() == 0 :
-            win.send("r")
-         elif event.key == pygame.K_t and pygame.key.get_mods() == 0 :
-            win.send("t")
-         elif event.key == pygame.K_y and pygame.key.get_mods() == 0 :
-            win.send("y")
-         elif event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}s{CTRLUP}")
-         elif event.key == pygame.K_q and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}q{CTRLUP}")
-         elif event.key == pygame.K_e and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}e{CTRLUP}")
-         elif event.key == pygame.K_w and pygame.key.get_mods() & pygame.KMOD_CTRL:
-            win.send("{CTRLDOWN}w{CTRLUP}")
-#Map movement controls
-         elif event.key == pygame.K_UP and pygame.key.get_mods() == 0 :
-            win.send("{UP}")
-         elif event.key == pygame.K_DOWN and pygame.key.get_mods() == 0 :
-            win.send('hhf')  # Send keys, as if typed (performs ahk string escapes)
+handler = {}
+handler[wx.MOD_NONE] = actions
+handler[wx.MOD_CONTROL] = control_actions
+handler[wx.MOD_SHIFT] = shift_actions
+#########################################################################
+class MyPanel(wx.Panel):
+    """"""
+    #----------------------------------------------------------------------
+    def __init__(self, parent):
+        """Constructor"""
+        wx.Panel.__init__(self, parent, style = wx.WANTS_CHARS)
+        
+        self.Bind(wx.EVT_KEY_DOWN, self.onKey)
+#       button = wx.Button(self, label="Test Shift")
+#       button.Bind(wx.EVT_KEY_DOWN, self.onKeyDown)
+#        self.Bind(wx.EVT_CHAR, self.onKey)
 
-#            win.send("{DOWN}")
-         elif event.key == pygame.K_LEFT and pygame.key.get_mods() == 0 :
-#            win.send("{LEFT}")
-            win.send("h")
-            time.sleep(.1)
-            win.send("f")
-            time.sleep(.1)
-            win.send("hgggghhhhghhhg")
-            time.sleep(.1)
-            win.send("f")
-
-         elif event.key == pygame.K_RIGHT and pygame.key.get_mods() == 0 :
-#            win.send("hgggghgghgghgg")
-            win.send("hg")
-            time.sleep(.1)
-            win.send("f")
-            time.sleep(.1)
-
-            win.send("hgggghgghgghgg")
-            time.sleep(.1)
-            win.send("f")
-
-#            win.send("{RIGHT}")
-         elif event.key == pygame.K_HOME and pygame.key.get_mods() == 0 :
-            win.send("{HOME}")
-         elif event.key == pygame.K_PAGEUP and pygame.key.get_mods() == 0 :
-            win.send("{PGUP}")
-         elif event.key == pygame.K_PAGEDOWN and pygame.key.get_mods() == 0 :
-            win.send("{PGDN}")
-         elif event.key == pygame.K_f and pygame.key.get_mods() == 0 :
-            win.send("f")
-         elif event.key == pygame.K_g and pygame.key.get_mods() == 0 :
-            win.send("g")
-         elif event.key == pygame.K_h and pygame.key.get_mods() == 0 :
-            win.send("h")
-         elif event.key == pygame.K_j and pygame.key.get_mods() == 0 :
-            win.send("j")
-         elif event.key == pygame.K_1 and pygame.key.get_mods() == 0 :
-            win.send("1")
-         elif event.key == pygame.K_2 and pygame.key.get_mods() == 0 :
-            win.send("2")
-         elif event.key == pygame.K_3 and pygame.key.get_mods() == 0 :
-            win.send("3")
-         elif event.key == pygame.K_4 and pygame.key.get_mods() == 0 :
-            win.send("4")
-         elif event.key == pygame.K_5 and pygame.key.get_mods() == 0 :
-            win.send("5")
-         elif event.key == pygame.K_z and pygame.key.get_mods() == 0 :
-            win.send("z")
-         elif event.key == pygame.K_x and pygame.key.get_mods() == 0 :
-            win.send("x")
-         elif event.key == pygame.K_MINUS and pygame.key.get_mods() == 0 :
-            win.send("-")
-         elif event.key == pygame.K_KP_MINUS and (pygame.key.get_mods()  == 0 or (pygame.key.get_mods() & pygame.KMOD_NUM	)):
-            win.send("{NUMPADSUB}")
-         elif event.key == pygame.K_KP_PLUS and (pygame.key.get_mods()  == 0 or (pygame.key.get_mods() & pygame.KMOD_NUM	)):
-            win.send("{NUMPADADD}")
-         elif event.key == pygame.K_SPACE and pygame.key.get_mods() == 0 :
-            win.send("{SPACE}")
-         elif event.key == pygame.K_F11 and pygame.key.get_mods() == 0 :
-            win.send("{F11}")
-         elif event.key == pygame.K_F11 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
-            win.send("{SHIFTDOWN}{F11}{SHIFTUP}")
-         elif event.key == pygame.K_F12 and pygame.key.get_mods() == 0 :
-            win.send("{F12}")
-
-      elif event.type == pygame.MOUSEBUTTONDOWN :
-         if event.button == 1:
-#            autoit.control_click_by_handle(window_id, window_id, button = 'left')
-         elif event.button == 3:
-=======
-         pass
-      elif event.type == pygame.MOUSEBUTTONDOWN :
-         if event.button == 1:
-            pass
-#            autoit.control_click_by_handle(window_id, window_id, button = 'left')
-         elif event.button == 3:
-            pass
->>>>>>> 02f5ff32e89e782b857e736dd9a72368acf69e4a
-#            autoit.control_click_by_handle(window_id, window_id, button = 'right')
+    #----------------------------------------------------------------------
+    def onKey(self, event):
+        """
+        Check for ESC key press and exit is ESC is pressed
+        """
+        key_code = event.GetKeyCode()
+        mods = event.GetModifiers()
+        if mods in handler and key_code in handler[mods]:
+            handler[mods][key_code]()
+#        if not(event.HasAnyModifiers()):
+#            try:
+#                actions[key_code](self)
+#            except:
+#                pass
+##            self.GetParent().Close()
+#        elif event.GetModifiers() == wx.MOD_CONTROL:
+#            try:
+#                control_actions[key_code]()
+#            except:
+#                pass
+#        elif event.GetModifiers() == wx.MOD_SHIFT:
+#            try:
+#                shift_actions[key_code]()
+#            except:
+#                pass
             
-      elif event.type == pygame.QUIT:
-         pygame.quit()
-         sys.exit()
+        else:
+            event.Skip()
+        
+    
+########################################################################
+class MyFrame(wx.Frame):
+    """"""
+    #----------------------------------------------------------------------
+    def __init__(self):
+        """Constructor"""
+        wx.Frame.__init__(self, None, title="Mod screen test")
+        panel = MyPanel(self)
+        self.ShowFullScreen(True)
+        self.SetTransparent(1)
+        
+if __name__ == "__main__":
+    app = wx.App(False)
+    frame = MyFrame()
+    if not(os.path.isfile(path) and os.path.basename(path) == "debug.log"):
+# Create open file dialog
+        openFileDialog = wx.FileDialog(frame, "Open", "", "", 
+          "Log files (*.log)|*.log", 
+           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+
+        openFileDialog.ShowModal()
+        path = openFileDialog.GetPath()
+        openFileDialog.Destroy()
+    if os.path.isfile(path) and os.path.basename(path) == "debug.log":
+        with open('settings.json', 'r') as openfile: 
+            settings = json.load(openfile)
+        settings["path"] = path
+        json_object = json.dumps(settings, indent=4)
+
+        with open("settings.json", "w") as outfile:
+            outfile.write(json_object)
+        t1 = threading.Thread(target=read_loop, args=())
+        t1.daemon = True  # thread dies with the program
+        t1.start()
+        ao_output.output("Hello Crusaders!", True)
+        app.MainLoop()
