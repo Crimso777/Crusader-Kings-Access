@@ -8,6 +8,9 @@ import os
 import sys
 
 import threading
+import win32api
+import win32con
+import win32gui
 import accessible_output2.outputs.auto
 ao_output = accessible_output2.outputs.auto.Auto()
 import wx
@@ -182,4 +185,5 @@ if __name__ == "__main__":
         t1 = threading.Thread(target=read_loop, args=())
         t1.daemon = True  # thread dies with the program
         t1.start()
+        ao_output.output("Hello Crusaders!", True)
         app.MainLoop()
