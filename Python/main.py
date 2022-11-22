@@ -6,7 +6,7 @@ import time
 import re
 import os
 import sys
-
+import copy
 import threading
 import win32api
 import win32con
@@ -18,6 +18,7 @@ import os
 import json
 def read_loop():
     cursor = 0
+    prev = ""
     with open(path) as f:
         f.seek(0,2)
         print(f.tell())
@@ -28,10 +29,25 @@ def read_loop():
             with open(path) as f:
                 f.seek(cursor, 0)
                 buffer = f.read()
-                pattern = "(<out>)(..*)(</out>)"
-                match = re.search(pattern, buffer)
-                if match:
-                    ao_output.output(match.group(2), True)
+                if len(prev) == 0: #case where there is no prior starting tag
+                    pattern = "(..*)(</out>)"
+                    match = re.search(pattern, buffer)
+                    if match:
+                        ao_output.output(match.group(2), True)
+#partial match with opening tag but no closing tag
+                    else: 
+                        pattern = "(<out>)(..*)"
+                        match = re.search(pattern, buffer)
+                        if match:
+                            prev = match.group(2)
+                else: #previously opened tag
+                    pattern = "(..*)(</out>)"
+                    match = re.search(pattern, buffer)
+                    if match:
+                        ao_output.output(prev+match.group(2), True)
+#still no closing tag
+                    else:
+                        prev = prev + buffer
                 f.seek(0,2)
                 cursor = f.tell()
 
@@ -63,7 +79,7 @@ actions[69] = lambda: ao_output.output("Realms view", True)
 actions[73] = lambda: ao_output.output("Kingdom titles", True)
 actions[79] = lambda: ao_output.output("Empire titles", True)
 actions[82] = lambda: ao_output.output("Faiths view", True)
-actions[84] = lambda:     win.send("hhf") #    ao_output.output("Cultures", True)
+actions[84] = lambda: ao_output.output("Cultures", True)
 actions[85] = lambda: ao_output.output("Duchy titles", True)
 actions[86] = lambda: ao_output.output("Find title", True)
 actions[88] = lambda: ao_output.output("Game speed faster", True)
@@ -104,10 +120,14 @@ shift_actions[69] = lambda: ao_output.output("Empire Titles", True)
 shift_actions[81] = lambda: ao_output.output("Duchy titles", True)
 shift_actions[87] = lambda: ao_output.output("Kingdom Titles", True)
 
-handler = {}
-handler[wx.MOD_NONE] = actions
-handler[wx.MOD_CONTROL] = control_actions
-handler[wx.MOD_SHIFT] = shift_actions
+help_handler = {}
+help_handler[wx.MOD_NONE] = actions
+help_handler[wx.MOD_CONTROL] = control_actions
+help_handler[wx.MOD_SHIFT] = shift_actions
+handler = copy.deepcopy(help_handler)
+handler[wx.MOD_NONE][84] = lambda: win.send("hhf")
+#handler = copy.deepcopy(help_handler)
+
 #########################################################################
 class MyPanel(wx.Panel):
     """"""
