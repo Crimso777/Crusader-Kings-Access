@@ -19,10 +19,11 @@ set_variable = {
 value = scope:target
 }
 		debug_log = "Traits: <out>[THIS.Var('education').GetFlagName]</out>"
-		
+		debug_log = "<family>"
 every_close_family_member = {
-debug_log = "Name: [THIS.Char.GetNameNoTooltip] ID: [THIS.Char.GetID] Relationship: [THIS.Char.GetRelationToStringExtended(PREV.Char)] Opinion: [THIS.Char.GetOpinionOf(PREV.Char)] Breakdown: [THIS.Char.GetOpinionBreakdownText(PREV.Char)]"
+debug_log = "<char><name>[THIS.Char.GetNameNoTooltip]</name><id>[THIS.Char.GetID]</id><relation>[THIS.Char.GetRelationToStringExtended(PREV.Char)]</relation><opinion>[THIS.Char.GetOpinionOf(PREV.Char)]</opinion><opinion_breakdown>[THIS.Char.GetOpinionBreakdownText(PREV.Char)]</opinion_breakdown></char>"
 }
+		debug_log = "</family>"
 every_courtier_or_guest = {
 debug_log = "Name: [THIS.Char.GetNameNoTooltip] ID: [THIS.Char.GetID] Relationship: [THIS.Char.GetRelationToStringExtended(PREV.Char)] Opinion: [THIS.Char.GetOpinionOf(PREV.Char)] Breakdown: [THIS.Char.GetOpinionBreakdownText(PREV.Char)]"
 }
@@ -31,7 +32,7 @@ debug_log = "Name: [THIS.Char.GetNameNoTooltip] ID: [THIS.Char.GetID] Relationsh
 }
 debug_log = "</CharacterWindow>"
 
-debug_log = "<1out>[GetString_CVector2f(GetAbsoluteMousePosition)]</out>"
+#debug_log = "<1out>[GetString_CVector2f(GetAbsoluteMousePosition)]</out>"
 
 #debug_log = "<out>Hello World!</out>"
 

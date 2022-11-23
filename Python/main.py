@@ -29,22 +29,25 @@ def read_loop():
             with open(path) as f:
                 f.seek(cursor, 0)
                 buffer = f.read()
-                if len(prev) == 0: #case where there is no prior starting tag
-                    pattern = "(..*)(</out>)"
-                    match = re.search(pattern, buffer)
+#                if len(prev) == 0: #case where there is no prior starting tag
+                if True:
+                    pattern = "(<out>)(..*?)(</out>)(.*?)"
+#                    match = re.search(pattern, buffer)
+                    match = re.search(pattern, buffer, flags = re.DOTALL)
                     if match:
                         ao_output.output(match.group(2), True)
 #partial match with opening tag but no closing tag
-                    else: 
-                        pattern = "(<out>)(..*)"
-                        match = re.search(pattern, buffer)
-                        if match:
-                            prev = match.group(2)
+#                    else: 
+#                        pattern = "(<out>)(..*)"
+#                        match = re.search(pattern, buffer)
+#                        if match:
+#                            prev = match.group(2)
                 else: #previously opened tag
                     pattern = "(..*)(</out>)"
                     match = re.search(pattern, buffer)
                     if match:
-                        ao_output.output(prev+match.group(2), True)
+                        ao_output.output(prev+ "NEWLINE" + match.group(1), True)
+                        prev = ""
 #still no closing tag
                     else:
                         prev = prev + buffer
