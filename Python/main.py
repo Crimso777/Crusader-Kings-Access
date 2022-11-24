@@ -127,7 +127,16 @@ help_handler = {}
 help_handler[wx.MOD_NONE] = actions
 help_handler[wx.MOD_CONTROL] = control_actions
 help_handler[wx.MOD_SHIFT] = shift_actions
-handler = copy.deepcopy(help_handler)
+ptactions = {}
+ptactions[wx.WXK_F1] = lambda: win.send("{F1}")
+shift_ptactions = {}
+control_ptactions = {}
+pthandler = {}
+pthandler[wx.MOD_NONE] = ptactions
+pthandler[wx.MOD_CONTROL] = control_ptactions
+pthandler[wx.MOD_SHIFT] = shift_ptactions
+
+handler = copy.deepcopy(pthandler)
 handler[wx.MOD_NONE][84] = lambda: win.send("hhf")
 #handler = copy.deepcopy(help_handler)
 
