@@ -31,11 +31,19 @@ def read_loop():
                 buffer = f.read()
 #                if len(prev) == 0: #case where there is no prior starting tag
                 if True:
-                    pattern = "(<out>)(..*?)(</out>)(.*?)"
-#                    match = re.search(pattern, buffer)
-                    match = re.search(pattern, buffer, flags = re.DOTALL)
-                    if match:
-                        ao_output.output(match.group(2), True)
+#out tag
+                    pattern1 = "(<out>)(..*?)(</out>)(.*?)"
+                    match1 = re.search(pattern1, buffer, flags = re.DOTALL)
+                    if match1:
+                        ao_output.output(match1.group(2), True)
+#character window
+                    pattern2 = "(<CharacterWindow>)(..*?)(</CharacterWindow>)(.*?)"
+                    match2 = re.search(pattern2, buffer, flags = re.DOTALL)
+
+                    if match2:
+                        print("Character Window Found")
+
+
 #partial match with opening tag but no closing tag
 #                    else: 
 #                        pattern = "(<out>)(..*)"

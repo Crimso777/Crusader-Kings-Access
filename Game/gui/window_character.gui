@@ -27,7 +27,7 @@ window = {
 #				on_start = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
    
 #		on_start = "[GetVariableSystem.Set( 'OPCode', GetGlobalVariable('test').GetValue )]"
-		on_start = "[GetVariableSystem.Set( 'CharacterWindowIsShown', 'true' )]"
+		on_start = "[GetVariableSystem.Set( 'test7', 'shown' )]"
 
 		on_start = "[GetVariableSystem.Set( 'hide_bottom_left_HUD', 'true' )]"
 	}
@@ -39,7 +39,7 @@ window = {
 		position_x = -60
 #CKA
 #		on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
-		on_start = "[GetVariableSystem.Clear( 'CharacterWindowIsShown' )]"
+		on_finish = "[GetVariableSystem.Clear( 'test7' )]"
 
 		on_start = "[GetVariableSystem.Clear( 'hide_bottom_left_HUD' )]"
 	

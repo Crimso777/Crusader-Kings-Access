@@ -47,12 +47,24 @@ button = {
 		shortcut = army_split_half
 	}
 #helper function that only displays character info to log if the character window is visible
-button = {
+	button = {
 		position = { 0 0 }
 		size = { 0 0 }
-		visible = "[Not(GetVariableSystem.Exists('CharacterWindowIsShown'))]"
+		visible = "[GetVariableSystem.Exists('test7' )]"
+state = {
+	name = _show
+	on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
+	#on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue( d) ).End)]"
+#	on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue('(CFixedPoint)1')).End)]"
+			on_finish = "[PdxGuiTriggerAllAnimations('toggle_character_window1')]"
+
+}
+
 		state = {
-			name = "toggle_character_window2"
+			name = "toggle_character_window1"
+
+#on_start = "[GetScriptedGui( 'hello_world' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+			
 			on_start = "[PdxGuiTriggerAllAnimations('append_trait_list')]"
 			on_finish = "[PdxGuiTriggerAllAnimations('cka_select_character')]"
 
@@ -760,18 +772,8 @@ widget = {
 		# Invisible button to ensure that these shortcuts don't get hidden
 		button = {
 			size = { 0 0 }
-			onclick = "[PdxGuiTriggerAllAnimations('toggle_character_window1')]"
+			onclick = "[ToggleCharacter( GetPlayer.GetID )]"
 			shortcut = "character_window"
-#CKA
-state = {
-	name = "toggle_character_window1"
-	on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
-	on_start  = "[ToggleCharacter( GetPlayer.GetID )]"
-	#on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue( d) ).End)]"
-#	on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue('(CFixedPoint)1')).End)]"
-
-	on_finish = "[PdxGuiTriggerAllAnimations('toggle_character_window2')]"
-}
 
 		}
 
