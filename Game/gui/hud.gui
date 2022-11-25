@@ -97,8 +97,12 @@ state = {
 		state = {
 			name = "character_select2"
 			on_start = "[PdxGuiTriggerAllAnimations('append_trait_list')]"
-			on_finish = "[PdxGuiTriggerAllAnimations('cka_select_character')]"
-
+			on_finish = "[PdxGuiTriggerAllAnimations('character_select2')]"
+		}
+		state = {
+			name = "character_select3"
+			on_start = "[PdxGuiTriggerAllAnimations('cka_select_character')]"
+			on_finish = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 		}
 	}
 #Character Right Click event handler.

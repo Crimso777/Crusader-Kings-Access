@@ -16,6 +16,16 @@ ao_output = accessible_output2.outputs.auto.Auto()
 import wx
 import os
 import json
+chars = []
+selection = []
+labels = []
+
+def layer_controls(top, bottom):
+    result = copy.deepcopy(bottom)
+    for mod in top:
+        for key in top[mod]:
+            result[mod][key] = top[mod][key]
+    return result
 def read_loop():
     cursor = 0
     prev = ""
@@ -41,7 +51,23 @@ def read_loop():
                     match2 = re.search(pattern2, buffer, flags = re.DOTALL)
 
                     if match2:
+                        chars = []
+                        selection = [0,0,0]
+                        labels = ["Name", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown", "ID"] 
+                        handler = layer_controls(menu_handler, pthandler)
+                        pattern3 = "(<char>)(..*?)(</char>)"
+                        matches = re.findall(pattern3, match2.group(2), flags = re.DOTALL)
+                        for match in matches:
+                            pattern = "<name>(..*?)</name><age>(..*?)</age><health>(..*?)</health><faith>(..*?)</faith><religion>(..*?)</religion><culture>(..*?)</culture><culture_group>(..*?)</culture_group><marital_status>(..*?)</marital_status><relation>(..*?)</relation><opinion>(..*?)</opinion><opinion_breakdown>(..*?)</opinion_breakdown><id>(..*?)</id>"
+                            chars.append( re.search(pattern, match[1], flags = re.DOTALL))
+
                         print("Character Window Found")
+                        print(len(chars))
+#                        print(chars[0].group(1))
+                        for char in chars:
+                            print(char.group(1))
+   
+#                        print(chars[0][1])
 
 
 #partial match with opening tag but no closing tag
@@ -146,7 +172,48 @@ pthandler[wx.MOD_SHIFT] = shift_ptactions
 
 handler = copy.deepcopy(pthandler)
 handler[wx.MOD_NONE][84] = lambda: win.send("hhf")
+#menu input handler
+menu_actions = {}
+menu_actions[65] = lambda: character_window_navigate(3)
+menu_actions[87] = lambda: character_window_navigate(0)
+menu_actions[83] = lambda: character_window_navigate(2)
+menu_actions[68] = lambda: character_window_navigate(1)
+
+menu_handler = {}
+menu_handler[wx.MOD_NONE] = menu_actions
+menu_handler[wx.MOD_CONTROL] = {}
+menu_handler[wx.MOD_SHIFT] = {}
+
 #handler = copy.deepcopy(help_handler)
+#input handler for character window:
+#dir represents a direction to navigate.  0 = up, 1 = right, 2 = down, 3 = left
+def character_window_navigate(dir):
+    result = ""
+    if selection[0] == 0 or selection[1] == 0 or selection[2] == 0:
+        selection = [1,1,1]
+        result = result + chars[selection[1]].group(selection[2]+1) + ", "
+        result = result + labels[selection[2]] + ": "
+        result = result + chars[selection[1]-1].groups(selection[2])
+        
+        ao_output.output(result, True)
+        return
+       
+    elif dir == 0 and selection[1] > 1:
+        selection[1] = selection[1] - 1
+    elif dir == 1 and selection[2] < len(chars[selection[1]].groups)-1:
+        selection[2] = selection[2] + 1
+    elif dir == 2 and selection[1] < len(chars):
+        selection[1] = selection[1] + 1
+    elif dir == 3 and selection[2] > 1:
+        selection[2] = selection[2] - 1
+    if dir%2 == 0:
+        result = result + chars[selection[1]].group(selection[2]+1) + ", "
+    result = result + labels[selection[2]] + ": "
+    result = result + chars[selection[1]-1].groups(selection[2])
+        
+    ao_output.output(result, True)
+
+
 
 #########################################################################
 class MyPanel(wx.Panel):
