@@ -25,6 +25,7 @@ def layer_controls(top, bottom):
     for mod in top:
         for key in top[mod]:
             result[mod][key] = top[mod][key]
+            print(key)
     return result
 def read_loop():
     cursor = 0
@@ -51,10 +52,14 @@ def read_loop():
                     match2 = re.search(pattern2, buffer, flags = re.DOTALL)
 
                     if match2:
+                        global chars            
                         chars = []
+                        global selection
                         selection = [0,0,0]
+                        global labels
                         labels = ["Name", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown", "ID"] 
-                        handler = layer_controls(menu_handler, pthandler)
+                        global handler
+                        handler = layer_controls(menu_handler, handler)
                         pattern3 = "(<char>)(..*?)(</char>)"
                         matches = re.findall(pattern3, match2.group(2), flags = re.DOTALL)
                         for match in matches:
@@ -189,27 +194,30 @@ menu_handler[wx.MOD_SHIFT] = {}
 #dir represents a direction to navigate.  0 = up, 1 = right, 2 = down, 3 = left
 def character_window_navigate(dir):
     result = ""
+    global selection
+    global chars
+    global labels
     if selection[0] == 0 or selection[1] == 0 or selection[2] == 0:
         selection = [1,1,1]
-        result = result + chars[selection[1]].group(selection[2]+1) + ", "
+        result = result + chars[selection[1]-1].group(1) + ", "
         result = result + labels[selection[2]] + ": "
-        result = result + chars[selection[1]-1].groups(selection[2])
+        result = result + chars[selection[1]-1].group(selection[2]+1)
         
         ao_output.output(result, True)
         return
        
     elif dir == 0 and selection[1] > 1:
         selection[1] = selection[1] - 1
-    elif dir == 1 and selection[2] < len(chars[selection[1]].groups)-1:
+    elif dir == 1 and selection[2] < len(chars[selection[1]].groups())-1:
         selection[2] = selection[2] + 1
     elif dir == 2 and selection[1] < len(chars):
         selection[1] = selection[1] + 1
     elif dir == 3 and selection[2] > 1:
         selection[2] = selection[2] - 1
     if dir%2 == 0:
-        result = result + chars[selection[1]].group(selection[2]+1) + ", "
+        result = result + chars[selection[1]-1].group(1) + ", "
     result = result + labels[selection[2]] + ": "
-    result = result + chars[selection[1]-1].groups(selection[2])
+    result = result + chars[selection[1]-1].group(selection[2]+1)
         
     ao_output.output(result, True)
 
