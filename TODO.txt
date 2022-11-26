@@ -1,0 +1,5 @@
+Interpret Health value for character window
+
+create class for user interface.  should be able to handle up down left right commands, as well as switching tabs.  
+
+Output rest of stats in character window

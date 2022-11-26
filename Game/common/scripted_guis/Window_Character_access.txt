@@ -10,7 +10,8 @@
 	effect = {			# what it does
 	debug_log = "<CharacterWindow>"
 	debug_log = "<out>[THIS.Char.GetNameNoTooltip] is [THIS.Char.GetAge] years old and has an id of [THIS.Char.GetID]</out>"
-	debug_log = "Spouse [THIS.Char.GetPrimarySpouse.GetNameNoTooltip] thinks the following: [THIS.Char.GetPrimarySpouse.GetOpinionBreakdownText(THIS.Char)]"
+	debug_log = "<spouse><char><name>[THIS.Char.GetPrimarySpouseOrBetrothed.GetNameNoTooltip]</name><age>[THIS.Char.GetPrimarySpouseOrBetrothed.GetAge]</age><health>[THIS.Char.GetPrimarySpouseOrBetrothed.GetHealth]</health><faith>[THIS.Char.GetPrimarySpouseOrBetrothed.GetFaith.GetNameNoTooltip]</faith><religion>[THIS.Char.GetPrimarySpouseOrBetrothed.GetFaith.GetReligion.GetNameNoTooltip]</religion><culture>[THIS.Char.GetPrimarySpouseOrBetrothed.GetCulture.GetNameNoTooltip]</culture><culture_group>[THIS.Char.GetPrimarySpouseOrBetrothed.GetCulture.GetHeritage.GetNameNoTooltip]</culture_group><marital_status>1</marital_status><relation>[THIS.Char.GetPrimarySpouseOrBetrothed.GetRelationToStringExtended(THIS.Char)]</relation><opinion>[THIS.Char.GetPrimarySpouseOrBetrothed.GetOpinionOf(THIS.Char)]</opinion><opinion_breakdown>[THIS.Char.GetPrimarySpouseOrBetrothed.GetOpinionBreakdownText(THIS.Char)]</opinion_breakdown><id>[THIS.Char.GetPrimarySpouseOrBetrothed.GetID]</id></char></spouse>"
+
 
 debug_log = " Diplomacy [THIS.Char.MakeScope.ScriptValue('debug_diplo')] Martial [THIS.Char.MakeScope.ScriptValue('debug_martial')] Stewardship [THIS.Char.MakeScope.ScriptValue('debug_stew')] Intrigue [THIS.Char.MakeScope.ScriptValue('debug_int')] Learning [THIS.Char.MakeScope.ScriptValue('debug_learn')]"
 #debug_log = "[THIS.Char.GetTraitIndices]"
@@ -19,6 +20,11 @@ set_variable = {
 value = scope:target
 }
 		debug_log = "Traits: <out>[THIS.Var('education').GetFlagName]</out>"
+debug_log = "<lieges>"
+		every_liege_or_above = {
+debug_log = "<char><name>[THIS.Char.GetNameNoTooltip]</name><age>[THIS.Char.GetAge]</age><health>[THIS.Char.GetHealth]</health><faith>[THIS.Char.GetFaith.GetNameNoTooltip]</faith><religion>[THIS.Char.GetFaith.GetReligion.GetNameNoTooltip]</religion><culture>[THIS.Char.GetCulture.GetNameNoTooltip]</culture><culture_group>[THIS.Char.GetCulture.GetHeritage.GetNameNoTooltip]</culture_group><marital_status>[THIS.Char.GetPrimarySpouseOrBetrothed.IsValid]</marital_status><relation>[THIS.Char.GetRelationToStringExtended(PREV.Char)]</relation><opinion>[THIS.Char.GetOpinionOf(PREV.Char)]</opinion><opinion_breakdown>[THIS.Char.GetOpinionBreakdownText(PREV.Char)]</opinion_breakdown><id>[THIS.Char.GetID]</id></char>"
+}
+debug_log = "</lieges>"
 		debug_log = "<family>"
 every_close_family_member = {
 debug_log = "<char><name>[THIS.Char.GetNameNoTooltip]</name><age>[THIS.Char.GetAge]</age><health>[THIS.Char.GetHealth]</health><faith>[THIS.Char.GetFaith.GetNameNoTooltip]</faith><religion>[THIS.Char.GetFaith.GetReligion.GetNameNoTooltip]</religion><culture>[THIS.Char.GetCulture.GetNameNoTooltip]</culture><culture_group>[THIS.Char.GetCulture.GetHeritage.GetNameNoTooltip]</culture_group><marital_status>[THIS.Char.GetPrimarySpouseOrBetrothed.IsValid]</marital_status><relation>[THIS.Char.GetRelationToStringExtended(PREV.Char)]</relation><opinion>[THIS.Char.GetOpinionOf(PREV.Char)]</opinion><opinion_breakdown>[THIS.Char.GetOpinionBreakdownText(PREV.Char)]</opinion_breakdown><id>[THIS.Char.GetID]</id></char>"
