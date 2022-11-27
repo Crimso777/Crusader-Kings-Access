@@ -19,7 +19,8 @@ import json
 chars = []
 selection = []
 labels = []
-
+tabs = []
+tags = ["consorts", "heirs", "lieges", "family", "courtiers", "vassals"]
 def layer_controls(top, bottom):
     result = copy.deepcopy(bottom)
     for mod in top:
@@ -36,6 +37,7 @@ def read_loop():
         cursor = f.tell()
     updated = os.path.getmtime(path)
     while True:
+        time.sleep(.01)
         if updated != os.path.getmtime(path):
             with open(path) as f:
                 f.seek(cursor, 0)
@@ -43,12 +45,12 @@ def read_loop():
 #                if len(prev) == 0: #case where there is no prior starting tag
                 if True:
 #out tag
-                    pattern1 = "(<out>)(..*?)(</out>)(.*?)"
+                    pattern1 = "(<out>)(.*?)(</out>)(.*?)"
                     match1 = re.search(pattern1, buffer, flags = re.DOTALL)
                     if match1:
                         ao_output.output(match1.group(2), True)
 #character window
-                    pattern2 = "(<CharacterWindow>)(..*?)(</CharacterWindow>)(.*?)"
+                    pattern2 = "(<CharacterWindow>)(.*?)(</CharacterWindow>)"
                     match2 = re.search(pattern2, buffer, flags = re.DOTALL)
 
                     if match2:
@@ -58,38 +60,41 @@ def read_loop():
                         selection = [0,0,0]
                         global labels
                         labels = ["Name", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown", "ID"] 
+                        global tabs
+                        tabs = []
                         global handler
                         handler = layer_controls(menu_handler, handler)
-                        pattern3 = "(<char>)(..*?)(</char>)"
-                        matches = re.findall(pattern3, match2.group(2), flags = re.DOTALL)
-                        for match in matches:
-                            pattern = "<name>(..*?)</name><age>(..*?)</age><health>(..*?)</health><faith>(..*?)</faith><religion>(..*?)</religion><culture>(..*?)</culture><culture_group>(..*?)</culture_group><marital_status>(..*?)</marital_status><relation>(..*?)</relation><opinion>(..*?)</opinion><opinion_breakdown>(..*?)</opinion_breakdown><id>(..*?)</id>"
-                            chars.append( re.search(pattern, match[1], flags = re.DOTALL))
-
+                        for tag in tags:
+                            open_tag = "<"+tag+">"
+                            close_tag = "</"+tag+">"
+                            tab_pattern = open_tag + "(.*?)" + close_tag
+                            tab_match = re.search(tab_pattern, match2.group(2), flags = re.DOTALL)
+                            if tab_match:
+                                pattern3 = "(<char>)(.*?)(</char>)"
+                                matches = re.findall(pattern3, tab_match.group(1), flags = re.DOTALL)
+                                if len(matches) > 0:
+                                    chars.append([])
+                                    tabs.append(tag)
+                                    for match in matches:
+                                        pattern = "<name>(.*?)</name><age>(.*?)</age><health>(.*?)</health><faith>(.*?)</faith><religion>(.*?)</religion><culture>(.*?)</culture><culture_group>(.*?)</culture_group><marital_status>(.*?)</marital_status><relation>(.*?)</relation><opinion>(.*?)</opinion><opinion_breakdown>(.*?)</opinion_breakdown><id>(.*?)</id>"
+                                        char = re.search(pattern, match[1], flags = re.DOTALL)
+                                        if char:
+                                            chars[-1].append(char)
+                                        else:
+                                            print(match[1])
                         print("Character Window Found")
                         print(len(chars))
 #                        print(chars[0].group(1))
-                        for char in chars:
-                            print(char.group(1))
    
 #                        print(chars[0][1])
 
 
 #partial match with opening tag but no closing tag
 #                    else: 
-#                        pattern = "(<out>)(..*)"
+#                        pattern = "(<out>)(.*)"
 #                        match = re.search(pattern, buffer)
 #                        if match:
 #                            prev = match.group(2)
-                else: #previously opened tag
-                    pattern = "(..*)(</out>)"
-                    match = re.search(pattern, buffer)
-                    if match:
-                        ao_output.output(prev+ "NEWLINE" + match.group(1), True)
-                        prev = ""
-#still no closing tag
-                    else:
-                        prev = prev + buffer
                 f.seek(0,2)
                 cursor = f.tell()
 
@@ -183,11 +188,16 @@ menu_actions[65] = lambda: character_window_navigate(3)
 menu_actions[87] = lambda: character_window_navigate(0)
 menu_actions[83] = lambda: character_window_navigate(2)
 menu_actions[68] = lambda: character_window_navigate(1)
+menu_actions[wx.WXK_TAB] = lambda: character_window_tab()
+menu_actions[91] = lambda: character_window_click()
+
+menu_shift_actions = {}
+menu_shift_actions[wx.WXK_TAB] = lambda: character_window_tab(reverse = True)
 
 menu_handler = {}
 menu_handler[wx.MOD_NONE] = menu_actions
 menu_handler[wx.MOD_CONTROL] = {}
-menu_handler[wx.MOD_SHIFT] = {}
+menu_handler[wx.MOD_SHIFT] = menu_shift_actions
 
 #handler = copy.deepcopy(help_handler)
 #input handler for character window:
@@ -197,31 +207,59 @@ def character_window_navigate(dir):
     global selection
     global chars
     global labels
-    if selection[0] == 0 or selection[1] == 0 or selection[2] == 0:
-        selection = [1,1,1]
-        result = result + chars[selection[1]-1].group(1) + ", "
+    if selection[1] == 0 or selection[2] == 0:
+        selection[1] = 1
+        selection[2] = 1
+        result = result + chars[selection[0]][selection[1]-1].group(1) + ", "
         result = result + labels[selection[2]] + ": "
-        result = result + chars[selection[1]-1].group(selection[2]+1)
+        result = result + chars[selection[0]][selection[1]-1].group(selection[2]+1)
         
         ao_output.output(result, True)
         return
        
     elif dir == 0 and selection[1] > 1:
         selection[1] = selection[1] - 1
-    elif dir == 1 and selection[2] < len(chars[selection[1]].groups())-1:
+    elif dir == 1 and selection[2] < len(chars[selection[0]][selection[1]-1].groups())-1:
         selection[2] = selection[2] + 1
-    elif dir == 2 and selection[1] < len(chars):
+    elif dir == 2 and selection[1] < len(chars[selection[0]]):
         selection[1] = selection[1] + 1
     elif dir == 3 and selection[2] > 1:
         selection[2] = selection[2] - 1
     if dir%2 == 0:
-        result = result + chars[selection[1]-1].group(1) + ", "
+        result = result + chars[selection[0]][selection[1]-1].group(1) + ", "
     result = result + labels[selection[2]] + ": "
-    result = result + chars[selection[1]-1].group(selection[2]+1)
+    result = result + chars[selection[0]][selection[1]-1].group(selection[2]+1)
         
     ao_output.output(result, True)
 
-
+#menu navigation tab switch
+#reverse means shift is held down, and the tabs will run in reverse
+def character_window_tab(reverse = False):
+    global selection
+    global tabs
+    selection[1] = 0
+    selection[2] = 0
+    if reverse == False:
+        selection[0] = selection[0] + 1
+        if selection[0] >= len(tabs):
+            selection[0] = 0
+    else:
+        selection[0] = selection[0] - 1
+        if selection[0] < 0:
+            selection[0] = len(tabs) - 1
+    ao_output.output(tabs[selection[0]], True)
+def character_window_click():
+    global chars
+    global selection
+    if selection[1] == 0 or selection[2] == 0:
+        return
+    id = chars[selection[0]][selection[1]-1].group(12)
+    id = str(bin(int(id)))
+    id = id[2:]
+    id = id.replace('0', 'g')
+    id = id.replace('1', 'h')
+    command = "hf" + id + "f"
+    win.send(command)
 
 #########################################################################
 class MyPanel(wx.Panel):

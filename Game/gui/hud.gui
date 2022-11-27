@@ -82,29 +82,30 @@ state = {
 		state = {
 			name = _show
 			on_start = "[PdxGuiTriggerAllAnimations('character_select1')]"
-
-#			on_start = "[GetScriptedGui( 'speak_registry' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+			on_start  = "[DefaultOnCharacterClick(IntToUnsigned(FixedPointToInt(GetGlobalVariable('arg1').GetValue)))]"
+			on_finish = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 		}
 		state = {
 			name = "character_select1"
 			on_start = "[GetVariableSystem.Clear( 'TraitList' )]"
-			on_start  = "[DefaultOnCharacterClick(IntToUnsigned(FixedPointToInt(GetGlobalVariable('arg1').GetValue)))]"
-			#on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue( d) ).End)]"
-#	on_start = "[GetScriptedGui('speak_number').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'number', MakeScopeValue('(CFixedPoint)1')).End)]"
 
 			on_finish = "[PdxGuiTriggerAllAnimations('character_select2')]"
 		}
 		state = {
 			name = "character_select2"
 			on_start = "[PdxGuiTriggerAllAnimations('append_trait_list')]"
-			on_finish = "[PdxGuiTriggerAllAnimations('character_select2')]"
+#			on_finish = "[GetVariableSystem.Set( 'PrintCKACharacterWindow', 'true' )]"
+			on_finish = "[PdxGuiTriggerAllAnimations('character_select3')]"
+
 		}
 		state = {
 			name = "character_select3"
 			on_start = "[PdxGuiTriggerAllAnimations('cka_select_character')]"
-			on_finish = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+
+#			on_finish = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 		}
 	}
+
 #Character Right Click event handler.
 #Opcode == 2
 #Args used: arg1

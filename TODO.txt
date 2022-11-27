@@ -3,3 +3,5 @@ Interpret Health value for character window
 create class for user interface.  should be able to handle up down left right commands, as well as switching tabs.  
 
 Output rest of stats in character window
+
+solve bug that occurs when a read takes longer than .01 seconds.

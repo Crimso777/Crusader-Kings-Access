@@ -86,9 +86,11 @@ on_start = "[GetVariableSystem.Set( 'TraitList', Concatenate(Concatenate( GetVar
 }
 
 hbox = {
+
 	state = {
 		name = "cka_select_character"
 		on_start = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
+
 	}
 }
 	
