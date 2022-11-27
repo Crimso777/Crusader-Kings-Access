@@ -173,8 +173,55 @@ help_handler[wx.MOD_CONTROL] = control_actions
 help_handler[wx.MOD_SHIFT] = shift_actions
 ptactions = {}
 ptactions[wx.WXK_F1] = lambda: win.send("{F1}")
+ptactions[wx.WXK_F2] = lambda: win.send("{F2}")
+ptactions[wx.WXK_F3] = lambda: win.send("{F3}")
+ptactions[wx.WXK_F4] = lambda: win.send("{F4}")
+ptactions[wx.WXK_F5] = lambda: win.send("{F5}")
+ptactions[wx.WXK_F6] = lambda: win.send("{F6}")
+ptactions[wx.WXK_F7] = lambda: win.send("{F7}")
+ptactions[wx.WXK_TAB] = lambda: win.send("{TAB}")
+#ASCII Keybinds
+#For these do we need syntax win.send('A') or win.send("{A}") works?
+#Not sure if win.send supports ASCII values, can't find online
+ptactions[32] = lambda: win.send("{SPACE}")
+ptactions[49] = lambda: win.send("{1}")
+ptactions[50] = lambda: win.send("{2}")
+ptactions[51] = lambda: win.send("{3}")
+ptactions[52] = lambda: win.send("{4}")
+ptactions[53] = lambda: win.send("{5}")
+ptactions[67] = lambda: win.send("{C}")
+ptactions[69] = lambda: win.send("{E}")
+ptactions[73] = lambda: win.send("{I}")
+ptactions[79] = lambda: win.send("{O}")
+ptactions[82] = lambda: win.send("{R}")
+ptactions[84] = lambda: win.send("{T}")
+ptactions[85] = lambda: win.send("{U}")
+ptactions[86] = lambda: win.send("{V}")
+ptactions[88] = lambda: win.send("{X}")
+ptactions[89] = lambda: win.send("{Y}")
+ptactions[90] = lambda: win.send("{Z}")
+#Army ptactions
+ptactions[70] = lambda: win.send("{F}")
+ptactions[71] = lambda: win.send("{G}")
+ptactions[72] = lambda: win.send("{H}")
+ptactions[74] = lambda: win.send("{J}")
+#Camera ptactions
+ptactions[wx.WXK_LEFT] = lambda: win.send("{LEFT}")
+ptactions[wx.WXK_UP] = lambda: win.send("{UP}")
+ptactions[wx.WXK_DOWN] = lambda: win.send("{DOWN}")
+ptactions[wx.WXK_RIGHT] = lambda: win.send("{RIGHT}")
+ptactions[65] = lambda: win.send("{A}")
+ptactions[87] = lambda: win.send("{W}")
+ptactions[83] = lambda: win.send("{S}")
+ptactions[68] = lambda: win.send("{D}")
+
 shift_ptactions = {}
+#Shift ptactions
+#What's syntax for SHIFT and CONTROL actions with win API?
+
 control_ptactions = {}
+#Control ptactions
+
 pthandler = {}
 pthandler[wx.MOD_NONE] = ptactions
 pthandler[wx.MOD_CONTROL] = control_ptactions
