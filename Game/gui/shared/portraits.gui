@@ -999,7 +999,7 @@ types PortraitTypes
 
         onclick = "[DefaultOnCharacterClick(Character.GetID)]"
 #CKA
-onclick = "[PdxGuiTriggerAllAnimations('character_select1')]"
+onclick = "[PdxGuiTriggerAllAnimations('portrait_toggle')]"
         onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
         button_ignore = none
 
@@ -1057,7 +1057,7 @@ onclick = "[PdxGuiTriggerAllAnimations('character_select1')]"
 
         onclick = "[DefaultOnCharacterClick(Character.GetID)]"
 #CKA
-onclick = "[PdxGuiTriggerAllAnimations('character_select1')]"
+onclick = "[PdxGuiTriggerAllAnimations('portrait_toggle')]"
 
         portrait_texture = "[Character.GetAnimatedPortrait('environment_body', 'camera_lifestyles', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
         mask = "gfx/portraits/portrait_mask_blank.dds"
@@ -1783,7 +1783,7 @@ template portrait_base
     {
         onclick = "[DefaultOnCharacterClick(Character.GetID)]"
 #CKA
-onclick = "[PdxGuiTriggerAllAnimations('character_select1')]"
+onclick = "[PdxGuiTriggerAllAnimations('portrait_toggle')]"
 
     }
 

@@ -46,6 +46,18 @@ button = {
 
 		shortcut = army_split_half
 	}
+
+	button = {
+		position = { 0 0 }
+		size = { 0 0 }
+state = {
+	name = "portrait_toggle"
+		on_start = "[GetVariableSystem.Clear( 'test7' )]"
+
+		on_finish = "[GetVariableSystem.Set( 'test7', 'shown' )]"
+
+		}
+	}
 #helper function that only displays character info to log if the character window is visible
 	button = {
 		position = { 0 0 }

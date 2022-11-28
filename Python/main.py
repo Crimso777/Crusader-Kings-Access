@@ -254,7 +254,7 @@ def character_window_click():
     global selection
     if selection[1] == 0 or selection[2] == 0:
         return
-    id = chars[selection[0]][selection[1]-1].group(12)
+    id = chars[selection[0]][selection[1]-1].group(16)
     id = str(bin(int(id)))
     id = id[2:]
     id = id.replace('0', 'g')
