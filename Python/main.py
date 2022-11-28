@@ -59,7 +59,7 @@ def read_loop():
                         global selection
                         selection = [0,0,0]
                         global labels
-                        labels = ["Name", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown", "ID"] 
+                        labels = ["Name", "gender", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "relationship to player character", "opnion of player character", "opinion breakdown of player character", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown of selected character", "ID"] 
                         global tabs
                         tabs = []
                         global handler
@@ -76,7 +76,8 @@ def read_loop():
                                     chars.append([])
                                     tabs.append(tag)
                                     for match in matches:
-                                        pattern = "<name>(.*?)</name><age>(.*?)</age><health>(.*?)</health><faith>(.*?)</faith><religion>(.*?)</religion><culture>(.*?)</culture><culture_group>(.*?)</culture_group><marital_status>(.*?)</marital_status><relation>(.*?)</relation><opinion>(.*?)</opinion><opinion_breakdown>(.*?)</opinion_breakdown><id>(.*?)</id>"
+                                        pattern = "<name>(.*?)</name><gender>(.*?)</gender><age>(.*?)</age><health>(.*?)</health><faith>(.*?)</faith><religion>(.*?)</religion><culture>(.*?)</culture><culture_group>(.*?)</culture_group><marital_status>(.*?)</marital_status><player_relation>(.*?)</player_relation><player_opinion>(.*?)</player_opinion><player_opinion_breakdown>(.*?)</player_opinion_breakdown><selected_relation>(.*?)</selected_relation><selected_opinion>(.*?)</selected_opinion><selected_opinion_breakdown>(.*?)</selected_opinion_breakdown><id>(.*?)</id>"
+
                                         char = re.search(pattern, match[1], flags = re.DOTALL)
                                         if char:
                                             chars[-1].append(char)
