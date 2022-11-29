@@ -12,14 +12,16 @@
 	debug_log = "<out>[THIS.Char.GetNameNoTooltip] is [THIS.Char.GetAge] years old and has an id of [THIS.Char.GetID]</out>"
 
 
-debug_log = " Diplomacy [THIS.Char.MakeScope.ScriptValue('debug_diplo')] Martial [THIS.Char.MakeScope.ScriptValue('debug_martial')] Stewardship [THIS.Char.MakeScope.ScriptValue('debug_stew')] Intrigue [THIS.Char.MakeScope.ScriptValue('debug_int')] Learning [THIS.Char.MakeScope.ScriptValue('debug_learn')]"
+debug_log = " <stats> <Diplomacy> [THIS.Char.MakeScope.ScriptValue('debug_diplo')] </Diplomacy> <Martial> [THIS.Char.MakeScope.ScriptValue('debug_martial')] </Martial> <Stewardship> [THIS.Char.MakeScope.ScriptValue('debug_stew')] </Stewardship> <Intrigue> [THIS.Char.MakeScope.ScriptValue('debug_int')] </Intrigue> <Learning> [THIS.Char.MakeScope.ScriptValue('debug_learn')] </Learning> </stats>"
+debug_log = "<Dread>[THIS.Char.GetDread] </Dread> <dread_breakdown> [THIS.Char.GetDreadBreakdown] </dread_breakdown>"
+debug_log = "<Prowess>[THIS.Char.GetProwess] </Prowess> <prowess_breakdown> [THIS.Char.GetProwessBreakdown] </prowess_breakdown>"
 #debug_log = "[THIS.Char.GetTraitIndices]"
 set_variable = { 
    name = education 
 value = scope:target
 }
 
-		debug_log = "Traits: <out>[THIS.Var('education').GetFlagName]</out>"
+		debug_log = "<traits> [THIS.Var('education').GetFlagName]</traits>"
 
 	debug_log = "<consorts>"
 
