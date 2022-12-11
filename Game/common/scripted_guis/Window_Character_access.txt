@@ -15,6 +15,32 @@
 debug_log = " <stats> <Diplomacy> [THIS.Char.MakeScope.ScriptValue('debug_diplo')] </Diplomacy> <Martial> [THIS.Char.MakeScope.ScriptValue('debug_martial')] </Martial> <Stewardship> [THIS.Char.MakeScope.ScriptValue('debug_stew')] </Stewardship> <Intrigue> [THIS.Char.MakeScope.ScriptValue('debug_int')] </Intrigue> <Learning> [THIS.Char.MakeScope.ScriptValue('debug_learn')] </Learning> </stats>"
 debug_log = "<Dread>[THIS.Char.GetDread] </Dread> <dread_breakdown> [THIS.Char.GetDreadBreakdown] </dread_breakdown>"
 debug_log = "<Prowess>[THIS.Char.GetProwess] </Prowess> <prowess_breakdown> [THIS.Char.GetProwessBreakdown] </prowess_breakdown>"
+
+ordered_held_title = {
+debug_log = "<title>"
+max = 100
+#order_by = position
+debug_log = "<cka_title>[THIS.Title.GetNameNoTooltip]</cka_title>"
+debug_log = "<cka_heirs>"
+ordered_title_heir = {
+max = 5
+debug_log = "<heir>[THIS.Char.GetNameNoTooltip]</heir>"
+check_range_bounds = no # If you don't want an error logged if the list is smaller than the min/max
+}
+debug_log = "</cka_heirs>"
+check_range_bounds = no # If you don't want an error logged if the list is smaller than the min/max
+debug_log = "</title>"
+}
+
+ordered_claim = {
+debug_log = "<cka_claims>"
+max = 100
+debug_log = "<claim> [THIS.Title.GetNameNoTooltip] </claim>"
+check_range_bounds = no # If you don't want an error logged if the list is smaller than the min/max
+debug_log = "</cka_claims>"
+}
+
+
 #debug_log = "[THIS.Char.GetTraitIndices]"
 set_variable = { 
    name = education 
@@ -52,8 +78,10 @@ debug_log = "<char><name>[THIS.Char.GetNameNoTooltip]</name><age>[THIS.Char.GetA
 
 	debug_log = "<heirs>"
 	ordered_heir = {
+	max = 100
 #		order_by = position
 debug_log = "<char><name>[THIS.Char.GetNameNoTooltip]</name><gender>[THIS.Char.GetSheHe]</gender><age>[THIS.Char.GetAge]</age><health>[THIS.Char.GetHealth]</health><faith>[THIS.Char.GetFaith.GetNameNoTooltip]</faith><religion>[THIS.Char.GetFaith.GetReligion.GetNameNoTooltip]</religion><culture>[THIS.Char.GetCulture.GetNameNoTooltip]</culture><culture_group>[THIS.Char.GetCulture.GetHeritage.GetNameNoTooltip]</culture_group><marital_status>[THIS.Char.GetPrimarySpouseOrBetrothed.IsValid]</marital_status><player_relation>[THIS.Char.GetRelationToStringExtended(GetPlayer)]</player_relation><player_opinion>[THIS.Char.GetOpinionOf(GetPlayer)]</player_opinion><player_opinion_breakdown>[THIS.Char.GetOpinionBreakdownText(GetPlayer)]</player_opinion_breakdown><selected_relation>[THIS.Char.GetRelationToStringExtended(PREV.Char)]</selected_relation><selected_opinion>[THIS.Char.GetOpinionOf(PREV.Char)]</selected_opinion><selected_opinion_breakdown>[THIS.Char.GetOpinionBreakdownText(PREV.Char)]</selected_opinion_breakdown><id>[THIS.Char.GetID]</id></char>"
+	check_range_bounds = no # If you don't want an error logged if the list is smaller than the min/max
 	}
 	debug_log = "</heirs>"
 
