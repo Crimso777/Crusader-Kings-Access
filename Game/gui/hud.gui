@@ -42,7 +42,7 @@ button = {
 		size = { 0 0 }
 								
 		clicksound = ""						
-		onclick = "[GetScriptedGui('pop_stack').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+		onclick = "[GetScriptedGui('binary_confirm').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 
 		shortcut = army_split_half
 	}
@@ -184,6 +184,8 @@ state = {
 		state = {
 			name = _show
 			on_start = "[GetScriptedGui( 'speak_status' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+#on_start = "[GetScriptedGui( 'hello_world' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+
 			on_finish = "[GetScriptedGui( 'hard_reset' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 
 		}

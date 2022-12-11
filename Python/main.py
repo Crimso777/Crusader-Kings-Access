@@ -2,6 +2,7 @@ from ahk import AHK
 from ahk.window import Window
 ahk = AHK()
 win = ahk.win_get(title='Crusader Kings III')  # by title
+win.send("j")
 import time
 import re
 import os
@@ -250,6 +251,7 @@ def character_window_navigate(dir):
     if selection[1] == 0 or selection[2] == 0:
         selection[1] = 1
         selection[2] = 1
+        print(len(chars[selection[0]]))
         result = result + chars[selection[0]][selection[1]-1].group(1) + ", "
         result = result + labels[selection[2]] + ": "
         result = result + chars[selection[0]][selection[1]-1].group(selection[2]+1)
