@@ -41,7 +41,7 @@ debug_log = "</cka_claims>"
 }
 
 
-#debug_log = "[THIS.Char.GetTraitIndices]"
+#debug_log = "Crimso[THIS.Char.GetTraitIndices]"
 set_variable = { 
    name = education 
 value = scope:target
@@ -110,6 +110,8 @@ debug_log = "</CharacterWindow>"
 #debug_log = "<1out>[GetString_CVector2f(GetAbsoluteMousePosition)]</out>"
 
 #debug_log = "<out>Hello World!</out>"
+
+remove_global_variable = char
 
 }
 }

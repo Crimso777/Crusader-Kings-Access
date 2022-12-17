@@ -49,6 +49,11 @@ hbox = {
 
 	name = "invisible_personality"
 	visible = "[Not(GetVariableSystem.Exists('TraitList'))]"
+				state = {
+					name = "append_trait_list"
+
+				}
+
 	datamodel = "[CharacterWindow.GetPersonalityTraits]"
 
 	using = Animation_Character_Window_Refresh_Short
@@ -89,7 +94,8 @@ hbox = {
 
 	state = {
 		name = "cka_select_character"
-		on_start = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
+#		on_start = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
+		on_start = "[GetScriptedGui( 'save_char' ).Execute( GuiScope.SetRoot( CharacterWindow.GetCharacter.MakeScope ).End)]"
 
 	}
 }

@@ -50,6 +50,18 @@ button = {
 	button = {
 		position = { 0 0 }
 		size = { 0 0 }
+		visible = "[GetGlobalVariable('char').IsSet]"
+		state = {
+			name = _show
+			on_finish = "[GetScriptedGui( 'Window_Character_access' ).Execute( GuiScope.SetRoot( GetGlobalVariable('char').Char.MakeScope ).AddScope('target', MakeScopeFlag(GetVariableSystem.Get('TraitList'))).End)]"
+
+
+		}
+	}
+
+	button = {
+		position = { 0 0 }
+		size = { 0 0 }
 state = {
 	name = "portrait_toggle"
 		on_start = "[GetVariableSystem.Clear( 'test7' )]"

@@ -8,6 +8,7 @@
 
 	effect = {			# what it does
 	#Operation to be performed, ie select a character, right click a character, etc.
+	remove_global_variable = char
 	set_global_variable = {
   name = opcode
   value = 0

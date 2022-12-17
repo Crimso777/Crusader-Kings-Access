@@ -40,7 +40,7 @@ def read_loop():
     while True:
         time.sleep(.01)
         if updated != os.path.getmtime(path):
-            with open(path) as f:
+            with open(path, encoding='latin-1') as f:
                 f.seek(cursor, 0)
                 buffer = f.read()
 #                if len(prev) == 0: #case where there is no prior starting tag
