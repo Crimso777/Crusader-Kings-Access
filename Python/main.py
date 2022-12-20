@@ -1,8 +1,5 @@
-from ahk import AHK
-from ahk.window import Window
-ahk = AHK()
-win = ahk.win_get(title='Crusader Kings III')  # by title
-win.send("j")
+import config
+win = config.win
 import time
 import re
 import os
@@ -12,16 +9,9 @@ import threading
 import win32api
 import win32con
 import win32gui
-import accessible_output2.outputs.auto
-ao_output = accessible_output2.outputs.auto.Auto()
 import wx
 import os
 import json
-chars = []
-selection = []
-labels = []
-tabs = []
-tags = ["consorts", "heirs", "lieges", "family", "courtiers", "vassals"]
 def layer_controls(top, bottom):
     result = copy.deepcopy(bottom)
     for mod in top:
@@ -30,6 +20,7 @@ def layer_controls(top, bottom):
             print(key)
     return result
 def read_loop():
+    ao_output = config.ao_output
     cursor = 0
     prev = ""
     with open(path) as f:
@@ -55,16 +46,12 @@ def read_loop():
                     match2 = re.search(pattern2, buffer, flags = re.DOTALL)
 
                     if match2:
-                        global chars            
-                        chars = []
-                        global selection
-                        selection = [0,0,0]
-                        global labels
-                        labels = ["Name", "gender", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "relationship to player character", "opnion of player character", "opinion breakdown of player character", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown of selected character", "ID"] 
-                        global tabs
-                        tabs = []
+                        chars = config.chars = []
+                        selection = config.selection = [0,0,0]
+                        labels = config.labels = ["Name", "gender", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "relationship to player character", "opnion of player character", "opinion breakdown of player character", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown of selected character", "ID"] 
+                        tabs = config.tabs = []
+                        tags = config.tags
                         global handler
-                        handler = layer_controls(menu_handler, handler)
                         for tag in tags:
                             open_tag = "<"+tag+">"
                             close_tag = "</"+tag+">"
@@ -86,6 +73,9 @@ def read_loop():
                                             print(match[1])
                         print("Character Window Found")
                         print(len(chars))
+                        new_module = __import__("character_window")
+                        handler = layer_controls(new_module.menu_handler, handler)
+
 #                        print(chars[0].group(1))
    
 #                        print(chars[0][1])
@@ -104,6 +94,7 @@ def read_loop():
 
 
 cwd = os.getcwd()
+sys.path.append(os.path.join(cwd, "handlers"))
 settings_path = os.path.join(cwd, "settings.json")
 if not (os.path.isfile(settings_path)):
     dict = {"path": ""}
@@ -224,84 +215,6 @@ pthandler[wx.MOD_SHIFT] = shift_ptactions
 handler = copy.deepcopy(pthandler)
 handler[wx.MOD_NONE][84] = lambda: win.send("hhf")
 #menu input handler
-menu_actions = {}
-menu_actions[65] = lambda: character_window_navigate(3)
-menu_actions[87] = lambda: character_window_navigate(0)
-menu_actions[83] = lambda: character_window_navigate(2)
-menu_actions[68] = lambda: character_window_navigate(1)
-menu_actions[wx.WXK_TAB] = lambda: character_window_tab()
-menu_actions[91] = lambda: character_window_click()
-
-menu_shift_actions = {}
-menu_shift_actions[wx.WXK_TAB] = lambda: character_window_tab(reverse = True)
-
-menu_handler = {}
-menu_handler[wx.MOD_NONE] = menu_actions
-menu_handler[wx.MOD_CONTROL] = {}
-menu_handler[wx.MOD_SHIFT] = menu_shift_actions
-
-#handler = copy.deepcopy(help_handler)
-#input handler for character window:
-#dir represents a direction to navigate.  0 = up, 1 = right, 2 = down, 3 = left
-def character_window_navigate(dir):
-    result = ""
-    global selection
-    global chars
-    global labels
-    if selection[1] == 0 or selection[2] == 0:
-        selection[1] = 1
-        selection[2] = 1
-        print(len(chars[selection[0]]))
-        result = result + chars[selection[0]][selection[1]-1].group(1) + ", "
-        result = result + labels[selection[2]] + ": "
-        result = result + chars[selection[0]][selection[1]-1].group(selection[2]+1)
-        
-        ao_output.output(result, True)
-        return
-       
-    elif dir == 0 and selection[1] > 1:
-        selection[1] = selection[1] - 1
-    elif dir == 1 and selection[2] < len(chars[selection[0]][selection[1]-1].groups())-1:
-        selection[2] = selection[2] + 1
-    elif dir == 2 and selection[1] < len(chars[selection[0]]):
-        selection[1] = selection[1] + 1
-    elif dir == 3 and selection[2] > 1:
-        selection[2] = selection[2] - 1
-    if dir%2 == 0:
-        result = result + chars[selection[0]][selection[1]-1].group(1) + ", "
-    result = result + labels[selection[2]] + ": "
-    result = result + chars[selection[0]][selection[1]-1].group(selection[2]+1)
-        
-    ao_output.output(result, True)
-
-#menu navigation tab switch
-#reverse means shift is held down, and the tabs will run in reverse
-def character_window_tab(reverse = False):
-    global selection
-    global tabs
-    selection[1] = 0
-    selection[2] = 0
-    if reverse == False:
-        selection[0] = selection[0] + 1
-        if selection[0] >= len(tabs):
-            selection[0] = 0
-    else:
-        selection[0] = selection[0] - 1
-        if selection[0] < 0:
-            selection[0] = len(tabs) - 1
-    ao_output.output(tabs[selection[0]], True)
-def character_window_click():
-    global chars
-    global selection
-    if selection[1] == 0 or selection[2] == 0:
-        return
-    id = chars[selection[0]][selection[1]-1].group(16)
-    id = str(bin(int(id)))
-    id = id[2:]
-    id = id.replace('0', 'g')
-    id = id.replace('1', 'h')
-    command = "hf" + id + "f"
-    win.send(command)
 
 #########################################################################
 class MyPanel(wx.Panel):
@@ -380,5 +293,5 @@ if __name__ == "__main__":
         t1 = threading.Thread(target=read_loop, args=())
         t1.daemon = True  # thread dies with the program
         t1.start()
-        ao_output.output("Hello Crusaders!", True)
+        config.ao_output.output("Hello Crusaders!", True)
         app.MainLoop()
