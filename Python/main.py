@@ -12,6 +12,65 @@ import win32gui
 import wx
 import os
 import json
+
+def build_table(buffer, interface):
+    result = []
+    open_tag = "<"+interface["tag"]+">"
+    close_tag = "</"+interface["tag"]+">"
+    pattern1 = open_tag + "(.*?)" + close_tag
+    match1 = re.search(pattern1, buffer, flags = re.DOTALL)
+    if match1:
+        rows = []
+        rows.append([interface["row_title"]])
+        for col in interface["columns"]:
+            rows[0].append(col["name"])
+        if "categories" in interface and len(interface["categories"]) > 0:
+            for category in interface["categories"]:
+                open_tag = "<"+ category["tag"] +">"
+                close_tag = "</"+ category["tag"]+">"
+                pattern2 = open_tag + "(.*?)" + close_tag
+                match2 = re.search(pattern2, match1.group(1), flags = re.DOTALL)
+                if match2:
+                    open_tag = "<"+ interface["rows"] +">"
+                    close_tag = "</"+ interface["rows"] +">"
+                    pattern3 = open_tag + "(.*?)" + close_tag
+                    matches = re.findall(pattern3, match2.group(1), flags = re.DOTALL)
+                    for match in matches:
+                        rows.append([])
+                        open_tag = "<"+ interface["row_title"] +">"
+                        close_tag = "</"+ interface["row_title"] +">"
+                        pattern4 = open_tag + "(.*?)" + close_tag
+                        match4 = re.search(pattern4, match, flags = re.DOTALL)
+                        rows[-1].append(category["name"] + ", " +match4.group(1))
+
+                        for col in interface["columns"]:
+                            open_tag = "<"+ col["tag"] +">"
+                            close_tag = "</"+ col["tag"] +">"
+                            pattern4 = open_tag + "(.*?)" + close_tag
+                            match4 = re.search(pattern4, match, flags = re.DOTALL)
+                            rows[-1].append(match4.group(1))
+        else:
+            open_tag = "<"+ interface["rows"] +">"
+            close_tag = "</"+ interface["rows"] +">"
+            pattern3 = open_tag + "(.*?)" + close_tag
+            matches = re.findall(pattern3, match1.group(1), flags = re.DOTALL)
+            for match in matches:
+                rows.append([])
+                open_tag = "<"+ interface["row_title"] +">"
+                close_tag = "</"+ interface["row_title"] +">"
+                pattern4 = open_tag + "(.*?)" + close_tag
+                match4 = re.search(pattern4, match, flags = re.DOTALL)
+                rows[-1].append(match4.group(1))
+                for col in interface["columns"]:
+                    open_tag = "<"+ col["tag"] +">"
+                    close_tag = "</"+ col["tag"] +">"
+                    pattern4 = open_tag + "(.*?)" + close_tag
+                    match4 = re.search(pattern4, match, flags = re.DOTALL)
+                    rows[-1].append(match4.group(1))
+        if len(rows) > 1:
+            result = rows
+    return result
+    
 def layer_controls(top, bottom):
     result = copy.deepcopy(bottom)
     for mod in top:
@@ -20,6 +79,9 @@ def layer_controls(top, bottom):
             print(key)
     return result
 def read_loop():
+    interface = []
+    with open('interface.json', 'r') as openfile: 
+        interface = json.load(openfile)
     ao_output = config.ao_output
     cursor = 0
     prev = ""
@@ -42,39 +104,26 @@ def read_loop():
                     if match1:
                         ao_output.output(match1.group(2), True)
 #character window
-                    pattern2 = "(<CharacterWindow>)(.*?)(</CharacterWindow>)"
-                    match2 = re.search(pattern2, buffer, flags = re.DOTALL)
+                    for i in interface:    
+                        open_tag = "<"+i["tag"]+">"
+                        close_tag = "</"+i["tag"]+">"
+                        pattern2 = open_tag + "(.*?)" + close_tag
+                        match2 = re.search(pattern2, buffer, flags = re.DOTALL)
 
-                    if match2:
-                        chars = config.chars = []
-                        selection = config.selection = [0,0,0]
-                        labels = config.labels = ["Name", "gender", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "relationship to player character", "opnion of player character", "opinion breakdown of player character", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown of selected character", "ID"] 
-                        tabs = config.tabs = []
-                        tags = config.tags
-                        global handler
-                        for tag in tags:
-                            open_tag = "<"+tag+">"
-                            close_tag = "</"+tag+">"
-                            tab_pattern = open_tag + "(.*?)" + close_tag
-                            tab_match = re.search(tab_pattern, match2.group(2), flags = re.DOTALL)
-                            if tab_match:
-                                pattern3 = "(<char>)(.*?)(</char>)"
-                                matches = re.findall(pattern3, tab_match.group(1), flags = re.DOTALL)
-                                if len(matches) > 0:
-                                    chars.append([])
-                                    tabs.append(tag)
-                                    for match in matches:
-                                        pattern = "<name>(.*?)</name><gender>(.*?)</gender><age>(.*?)</age><health>(.*?)</health><faith>(.*?)</faith><religion>(.*?)</religion><culture>(.*?)</culture><culture_group>(.*?)</culture_group><marital_status>(.*?)</marital_status><player_relation>(.*?)</player_relation><player_opinion>(.*?)</player_opinion><player_opinion_breakdown>(.*?)</player_opinion_breakdown><selected_relation>(.*?)</selected_relation><selected_opinion>(.*?)</selected_opinion><selected_opinion_breakdown>(.*?)</selected_opinion_breakdown><id>(.*?)</id>"
-
-                                        char = re.search(pattern, match[1], flags = re.DOTALL)
-                                        if char:
-                                            chars[-1].append(char)
-                                        else:
-                                            print(match[1])
-                        print("Character Window Found")
-                        print(len(chars))
-                        new_module = __import__("character_window")
-                        handler = layer_controls(new_module.menu_handler, handler)
+                        if match2:
+                            chars = config.chars = []
+                            selection = config.selection = [0,0,0]
+                            labels = config.labels = ["Name", "gender", "Age", "Health", "Faith", "Religion", "Culture", "Culture-Group", "Marital Status", "relationship to player character", "opnion of player character", "opinion breakdown of player character", "Relationship to selected character", "Opinion of selected character", "Opinion Breakdown of selected character", "ID"] 
+                            tabs = config.tabs = []
+                            tags = config.tags
+                            for i1 in i["tabs"]:
+                                print(i1)
+                                table = build_table(buffer, i1)
+                                if len(table) > 0:
+                                    chars.append({"name": i1["name"], "table": table})
+                            global handler
+                            new_module = __import__("character_window")
+                            handler = layer_controls(new_module.menu_handler, handler)
 
 #                        print(chars[0].group(1))
    

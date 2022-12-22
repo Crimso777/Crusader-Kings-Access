@@ -8,7 +8,7 @@ cwd = os.getcwd()
 interface_path = os.path.join(cwd, "interface.json")
 if not (os.path.isfile(interface_path)):
     window = {
-        "tag": "character_window",
+        "tag": "CharacterWindow",
         "type": "tabbed_interface",
         "script": "character_window",
         "tabs": [
@@ -36,8 +36,8 @@ if not (os.path.isfile(interface_path)):
                 "columns": [{"name": "Gender", "tag": "gender"}, {"name": "Age", "tag": "age"}, {"name": "Health", "tag": "health"}, {"name": "Faith", "tag": "faith"}, {"name": "Religion", "tag": "religion"}, {"name": "Culture", "tag": "culture"}, {"name": "Culture Group", "tag": "culture_group"}, {"name": "Marital Status", "tag": "marital_status"}, {"name": "Relationship to Player", "tag":"player_relation"}, {"name": "Opinion of Player", "tag": "player_opinion"}, {"name": "Opinion of Player breakdown", "tag": "player_opinion_breakdown"}, {"name": "Relationship to Selected Character", "tag": "selected_relation"}, {"name": "Opinion of Selected Character", "tag": "selected_opinion"}, {"name": "Opinion of Selected Character Breakdown", "tag": "selected_opinion_breakdown"}, {"name": "Character ID", "tag": "id"}]
                 },
             {
-                "name": "Leiges",
-                "tag": "leiges",
+                "name": "Lieges",
+                "tag": "lieges",
                 "type": "table",
                 "rows" : "char",
                 "row_title": "name",

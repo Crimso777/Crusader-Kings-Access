@@ -32,25 +32,26 @@ def character_window_navigate(dir):
         selection[1] = 1
         selection[2] = 1
         print(len(chars[selection[0]]))
-        result = result + chars[selection[0]][selection[1]-1].group(1) + ", "
-        result = result + labels[selection[2]] + ": "
-        result = result + chars[selection[0]][selection[1]-1].group(selection[2]+1)
-        
+        result = result + chars[selection[0]]["table"][selection[1]][0] + ", "
+        result = result + chars[selection[0]]["table"][0][selection[2]]+ ": "
+        result = result + chars[selection[0]]["table"][selection[1]][selection[2]]
+        print(str(selection[0]) + ", " + str(selection[1]) + ", " + str(selection[2]))
         ao_output.output(result, True)
         return
        
     elif dir == 0 and selection[1] > 1:
         selection[1] = selection[1] - 1
-    elif dir == 1 and selection[2] < len(chars[selection[0]][selection[1]-1].groups())-1:
+    elif dir == 1 and selection[2] < len(chars[selection[0]]["table"][selection[1]])-1:
         selection[2] = selection[2] + 1
-    elif dir == 2 and selection[1] < len(chars[selection[0]]):
+    elif dir == 2 and selection[1] < len(chars[selection[0]]["table"])-1:
         selection[1] = selection[1] + 1
     elif dir == 3 and selection[2] > 1:
         selection[2] = selection[2] - 1
     if dir%2 == 0:
-        result = result + chars[selection[0]][selection[1]-1].group(1) + ", "
-    result = result + labels[selection[2]] + ": "
-    result = result + chars[selection[0]][selection[1]-1].group(selection[2]+1)
+        result = result + chars[selection[0]]["table"][selection[1]][0] + ", "
+    result = result + chars[selection[0]]["table"][0][selection[2]] + ": "
+    result = result + chars[selection[0]]["table"][selection[1]][selection[2]]
+    print(str(selection[0]) + ", " + str(selection[1]) + ", " + str(selection[2]))
         
     ao_output.output(result, True)
 
@@ -65,13 +66,13 @@ def character_window_tab(reverse = False):
     selection[2] = 0
     if reverse == False:
         selection[0] = selection[0] + 1
-        if selection[0] >= len(tabs):
+        if selection[0] >= len(chars):
             selection[0] = 0
     else:
         selection[0] = selection[0] - 1
         if selection[0] < 0:
-            selection[0] = len(tabs) - 1
-    ao_output.output(tabs[selection[0]], True)
+            selection[0] = len(chars) - 1
+    ao_output.output(chars[selection[0]]["name"], True)
 def character_window_click():
     selection = config.selection
     chars = config.chars
@@ -79,7 +80,7 @@ def character_window_click():
     tabs = config.tabs
     if selection[1] == 0 or selection[2] == 0:
         return
-    id = chars[selection[0]][selection[1]-1].group(16)
+    id = chars[selection[0]]["table"][selection[1]][-1]
     id = str(bin(int(id)))
     id = id[2:]
     id = id.replace('0', 'g')

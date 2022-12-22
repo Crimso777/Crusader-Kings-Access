@@ -1,7 +1,8 @@
 [
     {
-        "tag": "character_window",
+        "tag": "CharacterWindow",
         "type": "tabbed_interface",
+        "script": "character_window",
         "tabs": [
             {
                 "name": "consorts",
@@ -160,8 +161,8 @@
                 ]
             },
             {
-                "name": "Leiges",
-                "tag": "leiges",
+                "name": "Lieges",
+                "tag": "lieges",
                 "type": "table",
                 "rows": "char",
                 "row_title": "name",
